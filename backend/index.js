@@ -85,6 +85,24 @@ app.get("/login", (req, res) => {
   }
 });
 
+//if no token present send error message
+const verifyJWT = (req, res, next) => {
+  const token = req.headers["x-access-token"];
+  if (!token) {
+    res.send("No token present");
+  } else {
+    jwt.verify(token, jwtSecret, (err, decoded) => {
+      if (err) {
+        res.json({ auth: false, message: "User is not authenticated" });
+        //if no errors and token is present save the decoded id as variable userID
+      } else {
+        req.userID = decoded.id;
+        next();
+      }
+    });
+  }
+};
+
 //catch route from front end
 //check if user has the correct token
 //apply middlewear to every sensitive request
