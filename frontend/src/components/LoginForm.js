@@ -18,14 +18,24 @@ const LoginForm = (props) => {
       username: username, //set this variable equal to the value of usernameReg
       password: password,
     }).then((response) => {
-      if (response.data.message) {
+      if (!response.data.auth) {
         //if message is returned from db
-        setLoginStatus(response.data.message); //display message
+        setLoginStatus(false); //display message
       } else {
         //if no messages are displayed
-        setLoginStatus(response.data[0].username); //display username
+        localStorage.setItem("token", response.data.token);
+        setLoginStatus(true);
       }
-      console.log(response.data);
+    });
+  };
+
+  const userAuthenticated = () => {
+    Axios.get("http://localhost:3001/isUserAuth", {
+      headers: {
+        "x-access-token": localStorage.getItem("token"),
+      },
+    }).then((response) => {
+      alert("User is authenticated");
     });
   };
 
@@ -76,7 +86,13 @@ const LoginForm = (props) => {
       </p>
       {/* message that displays login status
        */}
-      <h3>{loginStatus}</h3>
+      <h3>
+        {loginStatus && (
+          <button onClick={userAuthenticated}>
+            Check if user is authenticated
+          </button>
+        )}
+      </h3>
     </div>
   );
 };

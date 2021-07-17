@@ -10,7 +10,7 @@ const bcrypt = require("bcrypt"); //requires bcrypt dependency
 const saltRounds = 10; //ensures more complex and secure hashes are used
 
 const jwt = require("jsonwebtoken"); //Required web token dependancy
-const jwtSecret = process.env.REACT_APP_JWTSECRET;
+const jwtSecret = "BtpUaRv84rRK6YW5Aluz";
 
 const app = express();
 
@@ -138,11 +138,11 @@ app.post("/login", (req, res) => {
             //of user is authorised pass all info to the frontend
             res.json({ auth: true, token: token, result: result });
           } else {
-            res.send({ message: "Wrong username or password" }); //if credentials dont match send message
+            res.json({ auth: false, message: "Wrong username or password" });
           }
         });
       } else {
-        res.send({ message: "username doesnt exist" }); //if password is correct but credentials still dont match send message
+        res.json({ auth: false, message: "no user exists" });
       }
     }
   );
