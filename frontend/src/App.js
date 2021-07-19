@@ -29,10 +29,13 @@ function App() {
   if (isLoggedIn) {
     return <Dashboard />;
   } else {
-    return <Home />;
-    <Router>
-      <Switch></Switch>
-    </Router>;
+    return (
+      <Router>
+        <Switch>
+          <Route path="/" exact component={Home} />
+        </Switch>
+      </Router>
+    );
   }
 }
 
