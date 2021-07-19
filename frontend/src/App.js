@@ -1,38 +1,39 @@
-import React from "react";
+import React, { useEffect, useState } from "react"; //Usestate
+import Axios from "axios"; //import axios
 import "./App.css";
-import { useAuth0 } from "@auth0/auth0-react";
 import { Route } from "react-router";
 import { BrowserRouter as Router, Switch } from "react-router-dom";
 import Home from "./pages/Home";
 import Dashboard from "./pages/Dashboard";
-import Navbar from "./components/Navbar";
+
 import MainNavbar from "./components/MainNavbar";
 import ToDoLists from "./pages/ToDoLists";
 import Footer from "./components/Footer";
 import LoginForm from "./components/LoginForm";
 import SignupForm from "./components/SignupForm";
+import Greeting from "./components/Greeting";
 
 function App() {
-  const { isLoading } = useAuth0();
+  const [isLoggedIn, setisLoggedIn] = useState("");
 
-  if (isLoading) return <div>Loading...</div>;
+  useEffect(() => {
+    //get data from backend
+    Axios.get("http://localhost:3001/login").then((response) => {
+      //if there is a cookie present
+      if (response.data.loggedIn === true) {
+        setisLoggedIn(true);
+      }
+    });
+  }, []);
 
-  return (
-    <>
-      <Router>
-        <Navbar />
-        <MainNavbar />
-        <LoginForm />
-        <SignupForm />
-        <Switch>
-          <Route path="/" exact component={Home} />
-          <Route path="/Dashboard" component={Dashboard} />
-          <Route path="/ToDoLists" component={ToDoLists} />
-        </Switch>
-        <Footer />
-      </Router>
-    </>
-  );
+  if (isLoggedIn) {
+    return <Dashboard />;
+  } else {
+    return <Home />;
+    <Router>
+      <Switch></Switch>
+    </Router>;
+  }
 }
 
 export default App;
