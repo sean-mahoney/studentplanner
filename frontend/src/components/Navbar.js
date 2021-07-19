@@ -38,15 +38,6 @@ function Navbar() {
               <li className="nav-item">
                 <button onClick={() => setShow2(true)}>Sign Up</button>
               </li>
-              <li className="nav-item">
-                <Link
-                  to="/help"
-                  className="nav-links"
-                  onClick={closeMobileMenu}
-                >
-                  Help
-                </Link>
-              </li>
             </ul>
             <LoginForm onClose={() => setShow(false)} show={show} />
             <SignupForm onClose={() => setShow2(false)} show2={show2} />

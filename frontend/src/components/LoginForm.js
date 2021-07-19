@@ -2,12 +2,15 @@ import React, { useEffect, useState } from "react"; //Usestate
 import Axios from "axios"; //import axios
 
 const LoginForm = (props) => {
-  //Login form component
-
+  function refreshPage() {
+    window.location.reload(false);
+  }
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
   const [loginStatus, setLoginStatus] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+  const [counter, setcounter] = useState(0);
 
   //ensures axios sends cookie requests
   Axios.defaults.withCredentials = true;
@@ -20,11 +23,14 @@ const LoginForm = (props) => {
     }).then((response) => {
       if (!response.data.auth) {
         //if message is returned from db
-        setLoginStatus(false); //display message
+        setLoginStatus(false);
+        setErrorMessage("Incorrect Username/Password");
+        setcounter(counter + 1);
       } else {
         //if no messages are displayed
         localStorage.setItem("token", response.data.token);
         setLoginStatus(true);
+        refreshPage();
       }
     });
   };
@@ -35,7 +41,7 @@ const LoginForm = (props) => {
         "x-access-token": localStorage.getItem("token"),
       },
     }).then((response) => {
-      alert("User is authenticated");
+      console.log(response);
     });
   };
 
@@ -87,11 +93,7 @@ const LoginForm = (props) => {
       {/* message that displays login status
        */}
       <h3>
-        {loginStatus && (
-          <button onClick={userAuthenticated}>
-            Check if user is authenticated
-          </button>
-        )}
+        {errorMessage} {counter}
       </h3>
     </div>
   );

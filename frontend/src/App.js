@@ -5,13 +5,12 @@ import { Route } from "react-router";
 import { BrowserRouter as Router, Switch } from "react-router-dom";
 import Home from "./pages/Home";
 import Dashboard from "./pages/Dashboard";
-
+import Navbar from "./components/Navbar";
 import MainNavbar from "./components/MainNavbar";
 import ToDoLists from "./pages/ToDoLists";
 import Footer from "./components/Footer";
 import LoginForm from "./components/LoginForm";
 import SignupForm from "./components/SignupForm";
-import Greeting from "./components/Greeting";
 
 function App() {
   const [isLoggedIn, setisLoggedIn] = useState("");
@@ -27,13 +26,23 @@ function App() {
   }, []);
 
   if (isLoggedIn) {
-    return <Dashboard />;
+    return (
+      <Router>
+        <MainNavbar />
+        <Switch>
+          <Route path="/" exact component={Dashboard} />
+          <Route path="/ToDoLists" component={ToDoLists} />
+        </Switch>
+      </Router>
+    );
   } else {
     return (
       <Router>
-        <Switch>
-          <Route path="/" exact component={Home} />
-        </Switch>
+        <Navbar />
+        <LoginForm />
+        <SignupForm />
+        <Home />
+        <Footer />
       </Router>
     );
   }

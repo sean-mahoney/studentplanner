@@ -10,6 +10,7 @@ const bcrypt = require("bcrypt"); //requires bcrypt dependency
 const saltRounds = 10; //ensures more complex and secure hashes are used
 
 const jwt = require("jsonwebtoken"); //Required web token dependancy
+const { response } = require("express");
 const jwtSecret = "BtpUaRv84rRK6YW5Aluz";
 
 const app = express();
@@ -110,6 +111,22 @@ app.get("/isUserAuth", verifyJWT, (req, res) => {
   res.send("User authenticated"); //if correct send message
 });
 
+app.get("/getUser", verifyJWT, (req, res) => {
+  const username = req.body.username;
+  db.query(
+    "SELECT id FROM users WHERE username = ?",
+    username,
+    (err, result) => {
+      //console log errors if any
+      if (err) {
+        res.json({ message: "ERROR" });
+      } else {
+        res.send.response;
+      }
+    }
+  );
+});
+
 app.post("/login", (req, res) => {
   //catch variables from front end
   const username = req.body.username;
@@ -135,7 +152,7 @@ app.post("/login", (req, res) => {
               expiresIn: 300, //token expires in 5 mins
             });
             req.session.user = result;
-            //of user is authorised pass all info to the frontend
+            //if user is authorised pass all info to the frontend
             res.json({ auth: true, token: token, result: result });
           } else {
             res.json({ auth: false, message: "Wrong username or password" });
@@ -146,6 +163,16 @@ app.post("/login", (req, res) => {
       }
     }
   );
+});
+
+app.post("/logout", (req, res) => {
+  req.session.destroy();
+  if (err) {
+    //if errors send errors
+    res.send(err);
+  } else {
+    res.json({ message: "User Logged Out" });
+  }
 });
 
 app.listen(3001, () => {
