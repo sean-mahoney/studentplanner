@@ -75,6 +75,60 @@ app.post("/register", (req, res) => {
   });
 });
 
+app.post("/createList", (req, res) => {
+  //catch variables from front end
+  const list = req.body.list;
+  const id = req.body.currentID;
+
+  //insert into database users, these rows, these values.
+  db.query(
+    "INSERT INTO lists (id, list) VALUES (?,?)",
+    [id, list],
+    (err, result) => {
+      //console log errors if any
+      console.log(err);
+    }
+  );
+});
+
+app.get("/getLists", (req, res) => {
+  const id = req.body.currentID;
+  db.query("SELECT list FROM lists WHERE id = id", (err, result) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.send(result);
+    }
+  });
+});
+
+app.post("/createTask", (req, res) => {
+  //catch variables from front end
+  const task = req.body.Task;
+  const id = req.body.currentID;
+
+  //insert into database users, these rows, these values.
+  db.query(
+    "INSERT INTO tasks (id, task) VALUES (?,?)",
+    [id, task],
+    (err, result) => {
+      //console log errors if any
+      console.log(err);
+    }
+  );
+});
+
+app.get("/showTasks", (req, res) => {
+  const id = req.body.currentID;
+  db.query("SELECT task FROM tasks WHERE id = id", (err, result) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.send(result);
+    }
+  });
+});
+
 app.get("/login", (req, res) => {
   //catch route from frontend
   if (req.session.user) {

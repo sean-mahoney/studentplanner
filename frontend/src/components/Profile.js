@@ -1,4 +1,4 @@
-import React, { useEffect, useState, Component } from "react"; //Usestate
+import React, { useEffect, useState } from "react"; //Usestate
 import Axios from "axios"; //import axios
 
 const Profile = () => {

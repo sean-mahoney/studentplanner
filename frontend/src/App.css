@@ -23,6 +23,9 @@ body {
   -webkit-border-bottom-right-radius: 10px;
   -moz-border-radius-bottomright: 10px;
   border-bottom-right-radius: 10px;
+  box-shadow: 1px 1px 4px 0px rgba(0, 0, 0, 0.19);
+  -webkit-box-shadow: 1px 1px 4px 0px rgba(0, 0, 0, 0.19);
+  -moz-box-shadow: 1px 1px 4px 0px rgba(0, 0, 0, 0.19);
 }
 .navbar-logo {
   font-size: 2em;
@@ -435,6 +438,7 @@ body {
     rgba(245, 245, 245, 1) 0%,
     rgba(233, 233, 233, 1) 100%
   );
+  padding: 30px;
 }
 .Userprofile img {
   width: 150px;
@@ -442,11 +446,10 @@ body {
 }
 /* ToDoDash Component Styling */
 .ToDoDash {
-  width: 35%;
-  height: 300px;
+  width: 31%;
+  min-height: 300px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: Left;
   border-radius: 10px;
   background: rgb(245, 245, 245);
@@ -455,22 +458,153 @@ body {
     rgba(245, 245, 245, 1) 0%,
     rgba(233, 233, 233, 1) 100%
   );
+  padding: 30px;
 }
 .ToDoDash h2 {
-  margin-left: 20px;
   color: #000;
   cursor: pointer;
 }
 .ToDoDash a {
   text-decoration: none;
 }
+.ToDoDash-lists {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+.ToDoDash-lists p {
+  margin-right: 20px;
+  color: #000;
+  cursor: pointer;
+  background-color: #fff;
+  width: fit-content;
+  padding: 10px;
+  border: 1px solid #000;
+  border-radius: 10px;
+}
+.ToDoDash-lists p:hover {
+  background: #000;
+  color: #fff;
+  -webkit-box-shadow: 0px 10px 13px -7px #000000,
+    0px 0px 10px 0px rgba(0, 0, 0, 0);
+  box-shadow: 0px 10px 13px -7px #000000, 0px 0px 10px 0px rgba(0, 0, 0, 0);
+  transition: all 0.3s ease-in-out;
+}
 .ToDoList {
   width: 90%;
   padding-top: 200px;
   margin: auto;
   display: flex;
-  align-content: flex-start;
+  flex-direction: row;
   justify-content: space-between;
+}
+.ToDoList button {
+  width: 200px;
+}
+.ToDoList input {
+  width: 80%;
+  padding: 10px;
+  display: flex;
+  align-self: left;
+  border-radius: 10px;
+  font-family: merriweather, serif;
+  font-weight: 300;
+  font-style: normal;
+}
+.ToDoList-wrapper {
+  width: 25%;
+  height: auto;
+  min-height: 500px;
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  background: rgb(245, 245, 245);
+  background: linear-gradient(
+    90deg,
+    rgba(245, 245, 245, 1) 0%,
+    rgba(233, 233, 233, 1) 100%
+  );
+  padding: 50px;
+  border-radius: 10px;
+}
+.ToDoList-lists {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+.ToDoList-lists button {
+  font-family: merriweather, serif;
+  font-weight: 300;
+  font-style: normal;
+  font-size: 1em;
+  padding: 15px 40px;
+  margin: 20px 20px 0px 0px;
+  cursor: pointer;
+  background-color: rgb(105, 105, 105);
+  color: #fff;
+  border: 1px solid #000;
+  border-radius: 10px;
+  width: fit-content;
+}
+.ToDoList-lists button:hover {
+  background: #000;
+  color: #fff;
+  -webkit-box-shadow: 0px 10px 13px -7px #000000,
+    0px 0px 10px 0px rgba(0, 0, 0, 0);
+  box-shadow: 0px 10px 13px -7px #000000, 0px 0px 10px 0px rgba(0, 0, 0, 0);
+  transition: all 0.3s ease-in-out;
+}
+.tasks {
+  width: 58%;
+  height: auto;
+  min-height: 500px;
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  background: rgb(245, 245, 245);
+  background: linear-gradient(
+    90deg,
+    rgba(245, 245, 245, 1) 0%,
+    rgba(233, 233, 233, 1) 100%
+  );
+  padding: 50px;
+  border-radius: 10px;
+}
+.tasks input {
+  width: 50%;
+}
+.tasks button {
+  width: 200px;
+}
+.tasks-tasks {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+.tasks-tasks p {
+  font-family: merriweather, serif;
+  font-weight: 300;
+  font-style: normal;
+  font-size: 1em;
+  padding: 10px 40px;
+  margin: 20px 20px 0px 0px;
+  cursor: pointer;
+  background-color: #fff;
+  color: #000;
+  border: 1px solid #000;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+}
+.tasks-tasks p:hover {
+  background: #000;
+  color: #fff;
+  -webkit-box-shadow: 0px 10px 13px -7px #000000,
+    0px 0px 10px 0px rgba(0, 0, 0, 0);
+  box-shadow: 0px 10px 13px -7px #000000, 0px 0px 10px 0px rgba(0, 0, 0, 0);
+  transition: all 0.3s ease-in-out;
 }
 /* Footer Styling */
 .footer {
