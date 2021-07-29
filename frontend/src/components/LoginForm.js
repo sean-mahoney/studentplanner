@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react"; //Usestate
 import Axios from "axios"; //import axios
-import { Link } from "react-router-dom";
 
 const LoginForm = (props) => {
   function refreshPage() {
@@ -30,7 +29,6 @@ const LoginForm = (props) => {
       } else {
         //if no messages are displayed
         localStorage.setItem("token", response.data.token);
-        sessionStorage.setItem("token", response.data.token);
         localStorage.setItem("currentuser", username);
         setLoginStatus(true);
         refreshPage();
@@ -59,45 +57,45 @@ const LoginForm = (props) => {
     });
   }, []);
 
+  if (!props.show) {
+    return null;
+  }
+
   return (
     //Login Form
-    <div className="signupform-container">
-      <div className="signupform">
-        <h2>Login</h2>
-        <form>
-          <input
-            type="text"
-            onChange={(e) => {
-              setUsername(e.target.value); //setUsername variable to the value of the input
-            }}
-            placeholder="Username"
-          />
-          <input
-            type="password"
-            onChange={(e) => {
-              setPassword(e.target.value); //setPassword variable to the value of the input
-            }}
-            placeholder="Password"
-          />
-        </form>
-        <div className="formbuttons">
-          {/* On click do register function */}
-          <button className="btn-primary" onClick={login}>
-            Login
-          </button>
-          <Link className="btn-outline" to="/">
-            Close
-          </Link>
-        </div>
-        <p>
-          Don't have an account? <a href="/">Sign Up</a>
-        </p>
-        {/* message that displays login status
-         */}
-        <h3>
-          {errorMessage} {counter}
-        </h3>
+    <div className="signupform">
+      <h2>Login</h2>
+      <input
+        type="text"
+        onChange={(e) => {
+          setUsername(e.target.value); //setUsername variable to the value of the input
+        }}
+        placeholder="Username"
+      />
+      <input
+        type="password"
+        onChange={(e) => {
+          setPassword(e.target.value); //setPassword variable to the value of the input
+        }}
+        placeholder="Password"
+      />
+      <div className="formbuttons">
+        {/* On click do register function */}
+        <button className="btn-primary" onClick={login}>
+          Login
+        </button>
+        <button className="btn-outline" onClick={props.onClose}>
+          Close
+        </button>
       </div>
+      <p>
+        Don't have an account? <a href="/">Sign Up</a>
+      </p>
+      {/* message that displays login status
+       */}
+      <h3>
+        {errorMessage} {counter}
+      </h3>
     </div>
   );
 };
