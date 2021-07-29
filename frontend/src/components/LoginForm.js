@@ -30,6 +30,7 @@ const LoginForm = (props) => {
       } else {
         //if no messages are displayed
         localStorage.setItem("token", response.data.token);
+        sessionStorage.setItem("token", response.data.token);
         localStorage.setItem("currentuser", username);
         setLoginStatus(true);
         refreshPage();

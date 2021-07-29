@@ -9,7 +9,6 @@ class ToDoLists extends React.Component {
       lists: [],
       newListName: "",
       currentID: "",
-      show: false,
       updatedListName: "",
       Tasks: [],
       currentUser: window.localStorage.currentuser,
