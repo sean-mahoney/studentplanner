@@ -30,7 +30,7 @@ function App() {
       <Router>
         <MainNavbar />
         <Switch>
-          <Route path="/" exact component={Dashboard} />
+          <Route path="/login" exact component={Dashboard} />
           <Route path="/ToDoLists" component={ToDoLists} />
         </Switch>
       </Router>

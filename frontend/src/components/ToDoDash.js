@@ -21,11 +21,9 @@ class ToDoDash extends React.Component {
     });
   }
   render() {
-    const pin = this.props.pin;
-    console.log(pin);
     return (
       <div className="ToDoDash">
-        <Test pin={pin} />
+        <Test />
       </div>
     );
   }

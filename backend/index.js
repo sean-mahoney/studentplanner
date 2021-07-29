@@ -107,7 +107,7 @@ app.put("/updateList", (req, res) => {
   );
 });
 
-app.delete("/deleteList/id", (req, res) => {
+app.delete("/deleteList/:id", (req, res) => {
   const id = req.params.id;
   db.query("DELETE FROM lists WHERE list_id = ?", id, (err, result) => {
     if (err) {
@@ -236,8 +236,8 @@ app.post("/login", (req, res) => {
 });
 
 app.post("/getLists/", (req, res) => {
-  const pin = req.body.pin;
-  const sqlGET = `SELECT * FROM lists WHERE pin = '${pin}'`;
+  const currentUser = req.body.currentUser;
+  const sqlGET = `SELECT * FROM lists WHERE username = '${currentUser}'`;
   db.query(sqlGET, (err, result) => {
     //console log errors if any
     if (err) {

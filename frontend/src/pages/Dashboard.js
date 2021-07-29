@@ -7,14 +7,12 @@ import StudyDash from "../components/StudyDash";
 import ToDoLists from "./ToDoLists";
 
 const Dashboard = () => {
-  const pin = "4423";
   return (
     <div className="Dashboard">
       <Profile />
-      <ToDoDash pin={pin} />
+      <ToDoDash />
       <StudyDash />
-
-      <ToDoLists pin={pin} />
+      <ToDoLists />
     </div>
   );
 };

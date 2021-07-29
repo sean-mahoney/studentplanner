@@ -7,11 +7,12 @@ export class Test extends React.Component {
     super(props);
     this.state = {
       lists: [],
+      currentUser: window.localStorage.currentuser,
     };
   }
   loadlists = () => {
     Axios.post("http://localhost:3001/getLists", {
-      pin: this.props.pin,
+      currentUser: this.state.currentUser,
     }).then((response) => {
       this.setState({ lists: response.data });
     });

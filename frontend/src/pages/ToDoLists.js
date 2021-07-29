@@ -13,6 +13,7 @@ class ToDoLists extends React.Component {
       show: false,
       updatedListName: "",
       Tasks: [],
+      currentUser: window.localStorage.currentuser,
     };
   }
   componentDidMount() {
@@ -24,7 +25,7 @@ class ToDoLists extends React.Component {
       }
     });
     Axios.post("http://localhost:3001/getLists", {
-      pin: this.props.pin,
+      currentUser: this.state.currentUser,
     }).then((response) => {
       this.setState({ lists: response.data });
       console.log(response);
@@ -45,7 +46,6 @@ class ToDoLists extends React.Component {
     });
   };
   deleteList = (id) => {
-    console.log(id);
     Axios.delete(`http://localhost:3001/deleteList/${id}`);
     window.location.reload(false);
   };
