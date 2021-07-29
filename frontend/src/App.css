@@ -366,6 +366,16 @@ body {
   flex-wrap: wrap;
 }
 /* SignUp form styling */
+.signupform-container {
+  background: url(./images/library.jpg) center center/cover no-repeat;
+  height: 100vh;
+  min-height: 900px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  overflow: hidden;
+}
 .signupform {
   position: fixed;
   top: 50%;
@@ -387,7 +397,14 @@ body {
     5px 5px 15px 5px rgba(0, 0, 0, 0);
   padding: 50px;
 }
-.signupform input {
+.signupform form {
+  width: 100%;
+  height: auto;
+  display: flex;
+  align-content: center;
+  flex-direction: column;
+}
+.signupform form input {
   width: 80%;
   padding: 10px;
   margin: 10px;
@@ -408,6 +425,10 @@ body {
 .formbuttons button {
   margin: 20px 10px;
   font-size: 1em;
+}
+.formbuttons a {
+  text-decoration: none;
+  height: fit-content;
 }
 /* Dashboard Styling */
 .Dashboard {
@@ -533,29 +554,40 @@ body {
   flex-wrap: wrap;
   margin-bottom: 20px;
 }
-.ToDoList-lists button {
+.list-button {
+  display: flex;
+  flex-direction: row;
   font-family: merriweather, serif;
   font-weight: 300;
   font-style: normal;
   font-size: 1em;
-  padding: 15px 40px;
   margin: 20px 20px 0px 0px;
   cursor: pointer;
-  background-color: rgb(105, 105, 105);
+  background-color: #000;
   color: #fff;
-  border: 1px solid #000;
   border-radius: 10px;
   width: fit-content;
 }
-.ToDoList-lists button:hover {
-  background: #000;
+.list-button button {
+  padding: 15px 40px 15px 40px;
+  font-family: merriweather, serif;
+  font-weight: 300;
+  font-style: normal;
+  font-size: 1em;
+  background-color: rgb(105, 105, 105);
   color: #fff;
-  -webkit-box-shadow: 0px 10px 13px -7px #000000,
-    0px 0px 10px 0px rgba(0, 0, 0, 0);
-  box-shadow: 0px 10px 13px -7px #000000, 0px 0px 10px 0px rgba(0, 0, 0, 0);
-  transition: all 0.3s ease-in-out;
+  width: fit-content;
+  border-radius: 0px 10px 10px 0px;
+  border: none;
 }
-.tasks {
+.list-button button:hover {
+  cursor: pointer;
+  background: #fff;
+  color: #000;
+  font-weight: 600;
+  transition: ease 200ms;
+}
+.task-container {
   width: 58%;
   height: auto;
   min-height: 500px;
@@ -571,40 +603,68 @@ body {
   padding: 50px;
   border-radius: 10px;
 }
-.tasks input {
+.task-container input {
   width: 50%;
 }
-.tasks button {
+.task-container button {
   width: 200px;
 }
-.tasks-tasks {
+.task-box {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   margin-bottom: 20px;
 }
-.tasks-tasks p {
+.task {
+  display: flex;
+  flex-direction: row;
   font-family: merriweather, serif;
   font-weight: 300;
   font-style: normal;
   font-size: 1em;
-  padding: 10px 40px;
   margin: 20px 20px 0px 0px;
   cursor: pointer;
-  background-color: #fff;
-  color: #000;
-  border: 1px solid #000;
-  -webkit-border-radius: 10px;
-  -moz-border-radius: 10px;
+  background-color: #000;
+  color: #fff;
   border-radius: 10px;
+  width: auto;
+  height: 56px;
 }
-.tasks-tasks p:hover {
+.task:hover {
   background: #000;
   color: #fff;
-  -webkit-box-shadow: 0px 10px 13px -7px #000000,
-    0px 0px 10px 0px rgba(0, 0, 0, 0);
-  box-shadow: 0px 10px 13px -7px #000000, 0px 0px 10px 0px rgba(0, 0, 0, 0);
-  transition: all 0.3s ease-in-out;
+}
+.task button {
+  width: fit-content;
+}
+.task button:hover {
+  cursor: pointer;
+  font-weight: 600;
+  transition: ease 200ms;
+}
+.inner-task {
+  padding: 10px;
+  background-color: #fff;
+  border: 1px solid #000;
+  font-family: merriweather, serif;
+  font-weight: 300;
+  font-style: normal;
+  font-size: 1em;
+  border-radius: 10px;
+  width: auto;
+}
+.delete {
+  cursor: pointer;
+  height: 56px;
+}
+.delete :hover {
+  background-color: #fff;
+  color: #000;
+  transition: ease 200ms;
+}
+.delete svg {
+  padding: 20px;
+  border-radius: 10px;
 }
 /* Footer Styling */
 .footer {

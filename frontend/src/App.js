@@ -39,9 +39,11 @@ function App() {
     return (
       <Router>
         <Navbar />
-        <LoginForm />
-        <SignupForm />
-        <Home />
+        <Switch>
+          <Route path="/" exact component={Home} />
+          <Route path="/login" exact component={LoginForm} />
+          <Route path="/signup" exact component={SignupForm} />
+        </Switch>
         <Footer />
       </Router>
     );

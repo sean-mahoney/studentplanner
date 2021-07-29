@@ -20,7 +20,7 @@ app.use(
   cors({
     //tells app to use cors
     origin: ["http://localhost:3000"], //allowed domains for sessions
-    methods: ["GET", "POST", "UPDATE", "DELETE"], //Allowed methods
+    methods: ["GET", "POST", "UPDATE", "PUT", "DELETE"], //Allowed methods
     credentials: true,
   })
 );
@@ -78,7 +78,7 @@ app.post("/register", (req, res) => {
 app.post("/createList", (req, res) => {
   //catch variables from front end
   const list = req.body.list;
-  const id = req.body.currentID;
+  const id = req.body.id;
 
   //insert into database users, these rows, these values.
   db.query(
@@ -91,9 +91,25 @@ app.post("/createList", (req, res) => {
   );
 });
 
-app.get("/getLists", (req, res) => {
-  const id = req.body.currentID;
-  db.query("SELECT list FROM lists WHERE id = id", (err, result) => {
+app.put("/updateList", (req, res) => {
+  const id = req.body.id;
+  const list = req.body.list;
+  db.query(
+    "UPDATE lists SET list = ? WHERE list_id = ?",
+    [list, id],
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
+    }
+  );
+});
+
+app.delete("/deleteList/id", (req, res) => {
+  const id = req.params.id;
+  db.query("DELETE FROM lists WHERE list_id = ?", id, (err, result) => {
     if (err) {
       console.log(err);
     } else {
@@ -105,7 +121,7 @@ app.get("/getLists", (req, res) => {
 app.post("/createTask", (req, res) => {
   //catch variables from front end
   const task = req.body.Task;
-  const id = req.body.currentID;
+  const id = req.body.id;
 
   //insert into database users, these rows, these values.
   db.query(
@@ -118,9 +134,9 @@ app.post("/createTask", (req, res) => {
   );
 });
 
-app.get("/showTasks", (req, res) => {
-  const id = req.body.currentID;
-  db.query("SELECT task FROM tasks WHERE id = id", (err, result) => {
+app.post("/getTasks", (req, res) => {
+  const id = req.body.id;
+  db.query(`SELECT task FROM tasks WHERE list_id = ${id}`, (err, result) => {
     if (err) {
       console.log(err);
     } else {
@@ -217,6 +233,21 @@ app.post("/login", (req, res) => {
       }
     }
   );
+});
+
+app.post("/getLists/", (req, res) => {
+  const pin = req.body.pin;
+  const sqlGET = `SELECT * FROM lists WHERE pin = '${pin}'`;
+  db.query(sqlGET, (err, result) => {
+    //console log errors if any
+    if (err) {
+      res.json({ message: "ERROR" });
+      console.log(err);
+    } else {
+      res.send(result);
+      console.log(result);
+    }
+  });
 });
 
 app.post("/logout", (req, res) => {

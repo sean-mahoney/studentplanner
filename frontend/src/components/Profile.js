@@ -1,51 +1,47 @@
-import React, { useEffect, useState } from "react"; //Usestate
+import React from "react";
 import Axios from "axios"; //import axios
 
-const Profile = () => {
-  const [LoggedInUser, setLoggedInUser] = useState("");
-  const [LoggedInEmail, setLoggedInEmail] = useState("");
-  const [LoggedInUsername, setLoggedInUsername] = useState("");
-
-  useEffect(() => {
-    //get data from backend
+class Profile extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      LoggedInUser: "",
+      LoggedInEmail: "",
+      LoggedInUsername: "",
+    };
+  }
+  componentDidMount() {
     Axios.get("http://localhost:3001/login").then((response) => {
       //if there is a cookie present
       if (response.data.loggedIn === true) {
         //set login status to true and return the username
-        setLoggedInUser(response.data.user[0].name);
+        this.setState({ LoggedInUser: response.data.user[0].name });
       }
     });
-  }, []);
-
-  useEffect(() => {
-    //get data from backend
     Axios.get("http://localhost:3001/login").then((response) => {
       //if there is a cookie present
       if (response.data.loggedIn === true) {
         //set login status to true and return the username
-        setLoggedInEmail(response.data.user[0].email);
+        this.setState({ LoggedInEmail: response.data.user[0].email });
       }
     });
-  }, []);
-
-  useEffect(() => {
-    //get data from backend
     Axios.get("http://localhost:3001/login").then((response) => {
       //if there is a cookie present
       if (response.data.loggedIn === true) {
         //set login status to true and return the username
-        setLoggedInUsername(response.data.user[0].username);
+        this.setState({ LoggedInUsername: response.data.user[0].username });
       }
     });
-  }, []);
-
-  return (
-    <div className="Userprofile">
-      <h2>{LoggedInUser}</h2>
-      <h4>Username: {LoggedInUsername}</h4>
-      <p>{LoggedInEmail}</p>
-    </div>
-  );
-};
+  }
+  render() {
+    return (
+      <div className="Userprofile">
+        <h2>{this.state.LoggedInUser}</h2>
+        <h4>Username: {this.state.LoggedInUsername}</h4>
+        <p>{this.state.LoggedInEmail}</p>
+      </div>
+    );
+  }
+}
 
 export default Profile;

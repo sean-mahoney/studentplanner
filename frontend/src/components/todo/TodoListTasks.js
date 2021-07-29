@@ -1,68 +1,63 @@
-import React, { useEffect, useState } from "react"; //Usestate
+import React from "react";
 import Axios from "axios"; //import axios
+import { AiTwotoneDelete } from "react-icons/ai";
 
-const TodoListTasks = (props) => {
-  const [currentID, setcurrentID] = useState("");
-  const [Task, setTask] = useState("");
-  const [Tasks, setTasks] = useState([]);
-
-  useEffect(() => {
-    //get data from backend
+class TodoListTasks extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      currentID: "",
+      Task: "",
+      Tasks: this.props.Tasks,
+    };
+  }
+  componentDidMount() {
     Axios.get("http://localhost:3001/login").then((response) => {
       //if there is a cookie present
       if (response.data.loggedIn === true) {
         //set login status to true and return the username
-        setcurrentID(response.data.user[0].id);
+        this.setState({ currentID: response.data.user[0].id });
       }
     });
-  }, []);
-
-  const CreateTasks = () => {
+  }
+  CreateTasks = () => {
     Axios.post("http://localhost:3001/createTask", {
       //post variables to backend
-      Task: Task, //set this variable equal to the value
-      currentID: currentID,
+      Task: this.state.Task, //set this variable equal to the value
+      id: this.state.currentID,
     });
+    window.location.reload(false);
   };
 
-  useEffect(() => {
-    //On button click send get request to backend
-    Axios.get("http://localhost:3001/showTasks", { currentID: currentID }).then(
-      (response) => {
-        //get response
-        setTasks(response.data);
-      }
-    );
-  });
-
-  if (!props.show) {
-    return null;
-  }
-
-  return (
-    <div className="tasks">
-      <h2>Tasks</h2>
-      <div className="tasks-tasks">
-        {Tasks.map((val, key) => {
-          return (
-            <div>
-              <p>{val.task}</p>
-            </div>
-          );
-        })}
+  render() {
+    return (
+      <div className="task-container">
+        <h2>Tasks</h2>
+        <div className="task-box">
+          {this.state.Tasks.map((val, key) => {
+            return (
+              <div className="task">
+                <button className="inner-task">{val.task}</button>
+                <div className="delete">
+                  <AiTwotoneDelete />
+                </div>
+              </div>
+            );
+          })}
+        </div>
+        <h3>Create a new task</h3>
+        <input
+          type="text"
+          onChange={(e) => {
+            this.setState({ Task: e.target.value });
+          }}
+          placeholder="Task Name"
+        />
+        <button className="btn-primary" onClick={this.CreateTasks}>
+          Add
+        </button>
       </div>
-      <h3>Create a new task</h3>
-      <input
-        type="text"
-        onChange={(e) => {
-          setTask(e.target.value);
-        }}
-        placeholder="Task Name"
-      />
-      <button className="btn-primary" onClick={CreateTasks}>
-        Add
-      </button>
-    </div>
-  );
-};
+    );
+  }
+}
 export default TodoListTasks;
