@@ -30,7 +30,7 @@ function App() {
       <Router>
         <MainNavbar />
         <Switch>
-          <Route path="/login" exact component={Dashboard} />
+          <Route path="/" exact component={Dashboard} />
           <Route path="/ToDoLists" component={ToDoLists} />
         </Switch>
       </Router>
@@ -39,9 +39,9 @@ function App() {
     return (
       <Router>
         <Navbar />
-        <Route path="/" exact component={Home} />
-        <Route path="/login" exact component={LoginForm} />
-        <Route path="/signup" exact component={SignupForm} />
+        <Home />
+        <LoginForm />
+        <SignupForm />
         <Footer />
       </Router>
     );
