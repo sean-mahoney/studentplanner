@@ -1,6 +1,5 @@
 import React from "react";
 import Axios from "axios"; //import axios
-import TodoListTasks from "../components/todo/TodoListTasks";
 import { AiTwotoneDelete, AiFillEdit } from "react-icons/ai";
 
 class ToDoLists extends React.Component {
@@ -36,8 +35,10 @@ class ToDoLists extends React.Component {
       //post variables to backend
       list: this.state.newListName, //set this variable equal to the value
       id: this.state.currentID,
+      currentUser: this.state.currentUser,
+    }).then((response) => {
+      this.setState({ lists: response.data });
     });
-    window.location.reload(false);
   };
   updateList = (id) => {
     Axios.put("http://localhost:3001/updateList", {
@@ -46,6 +47,7 @@ class ToDoLists extends React.Component {
     });
   };
   deleteList = (id) => {
+    console.log(id);
     Axios.delete(`http://localhost:3001/deleteList/${id}`);
     window.location.reload(false);
   };

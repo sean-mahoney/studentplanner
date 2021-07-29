@@ -79,11 +79,12 @@ app.post("/createList", (req, res) => {
   //catch variables from front end
   const list = req.body.list;
   const id = req.body.id;
+  const currentUser = req.body.currentUser;
 
   //insert into database users, these rows, these values.
   db.query(
-    "INSERT INTO lists (id, list) VALUES (?,?)",
-    [id, list],
+    "INSERT INTO lists (id, list, username) VALUES (?,?,?)",
+    [id, list, currentUser],
     (err, result) => {
       //console log errors if any
       console.log(err);
