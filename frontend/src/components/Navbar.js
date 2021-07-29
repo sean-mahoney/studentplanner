@@ -2,12 +2,16 @@ import React from "react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
+import LoginForm from "../components/LoginForm";
+import SignupForm from "../components/SignupForm";
 //Main navigation menu component
 function Navbar() {
   const [click, setClick] = useState(false);
   const handleClick = () => setClick(!click);
   const closeMobileMenu = () => setClick(false);
   const { isAuthenticated } = useAuth0();
+  const [show, setShow] = useState(false);
+  const [show2, setShow2] = useState(false);
 
   return (
     !isAuthenticated && (
@@ -29,24 +33,14 @@ function Navbar() {
                 </Link>
               </li>
               <li className="nav-item">
-                <Link
-                  to="/login"
-                  className="nav-links"
-                  onClick={closeMobileMenu}
-                >
-                  Log In
-                </Link>
+                <button onClick={() => setShow(true)}>Log In</button>
               </li>
               <li className="nav-item">
-                <Link
-                  to="/signup"
-                  className="nav-links"
-                  onClick={closeMobileMenu}
-                >
-                  Sign Up
-                </Link>
+                <button onClick={() => setShow2(true)}>Sign Up</button>
               </li>
             </ul>
+            <LoginForm onClose={() => setShow(false)} show={show} />
+            <SignupForm onClose={() => setShow2(false)} show2={show2} />
           </div>
         </nav>
       </>
