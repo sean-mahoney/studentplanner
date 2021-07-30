@@ -593,6 +593,9 @@ body {
   padding: 50px;
   border-radius: 10px;
 }
+.task-container h4 {
+  margin-top: 50px;
+}
 .task-container input {
   width: 50%;
 }
@@ -642,6 +645,19 @@ body {
   font-size: 1em;
   border-radius: 10px;
   width: auto;
+}
+.inner-task-complete {
+  padding: 10px;
+  background-color: #000;
+  border: 1px solid #000;
+  color: #fff;
+  font-family: merriweather, serif;
+  font-weight: 300;
+  font-style: normal;
+  font-size: 1em;
+  border-radius: 10px;
+  width: auto;
+  text-decoration: line-through;
 }
 .delete {
   cursor: pointer;

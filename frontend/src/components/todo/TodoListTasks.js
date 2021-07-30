@@ -31,6 +31,7 @@ class TodoListTasks extends React.Component {
     });
     console.log(this.props.currentList);
     alert("Task Added");
+    window.location.reload(false);
     console.log(Response);
   };
 
@@ -39,6 +40,8 @@ class TodoListTasks extends React.Component {
       id: id,
       complete: true,
     });
+    alert("Task Completed");
+    window.location.reload(false);
   };
 
   undoComplete = (id) => {
@@ -85,23 +88,26 @@ class TodoListTasks extends React.Component {
         <button className="btn-primary" onClick={this.CreateTasks}>
           Add
         </button>
-        {this.state.selectedTasks.map((val) => {
-          return (
-            <>
-              <div className="task">
-                <button
-                  onClick={() => this.undoComplete(val.task_id)}
-                  className="inner-task"
-                >
-                  {val.task}
-                </button>
-                <div className="delete">
-                  <AiTwotoneDelete />
+        <h4>Completed Tasks</h4>
+        <div className="task-box">
+          {this.state.selectedTasks.map((val) => {
+            return (
+              <>
+                <div className="task">
+                  <button
+                    onClick={() => this.undoComplete(val.task_id)}
+                    className="inner-task-complete"
+                  >
+                    {val.task}
+                  </button>
+                  <div className="delete">
+                    <AiTwotoneDelete />
+                  </div>
                 </div>
-              </div>
-            </>
-          );
-        })}
+              </>
+            );
+          })}
+        </div>
       </div>
     );
   }
