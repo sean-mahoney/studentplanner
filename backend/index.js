@@ -15,6 +15,10 @@ const jwtSecret = "BtpUaRv84rRK6YW5Aluz";
 
 const app = express();
 
+app.get("/", (req, res) => {
+  res.send("Hello World");
+});
+
 app.use(express.json()); //app parses everything to json
 app.use(
   cors({
@@ -299,6 +303,6 @@ app.post("/logout", (req, res) => {
   }
 });
 
-app.listen(3001, () => {
+app.listen(process.env.PORT || 3001, () => {
   console.log("server running on port 3001");
 });
