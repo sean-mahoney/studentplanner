@@ -64,21 +64,23 @@ const LoginForm = (props) => {
   return (
     //Login Form
     <div className="signupform">
-      <h2>Login</h2>
-      <input
-        type="text"
-        onChange={(e) => {
-          setUsername(e.target.value); //setUsername variable to the value of the input
-        }}
-        placeholder="Username"
-      />
-      <input
-        type="password"
-        onChange={(e) => {
-          setPassword(e.target.value); //setPassword variable to the value of the input
-        }}
-        placeholder="Password"
-      />
+      <form>
+        <h2>Login</h2>
+        <input
+          type="text"
+          onChange={(e) => {
+            setUsername(e.target.value); //setUsername variable to the value of the input
+          }}
+          placeholder="Username"
+        />
+        <input
+          type="password"
+          onChange={(e) => {
+            setPassword(e.target.value); //setPassword variable to the value of the input
+          }}
+          placeholder="Password"
+        />
+      </form>
       <div className="formbuttons">
         {/* On click do register function */}
         <button className="btn-primary" onClick={login}>

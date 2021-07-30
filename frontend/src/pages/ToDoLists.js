@@ -1,6 +1,7 @@
 import React from "react";
 import Axios from "axios"; //import axios
 import { AiTwotoneDelete, AiFillEdit } from "react-icons/ai";
+import TodoListTasks from "../components/todo/TodoListTasks";
 
 class ToDoLists extends React.Component {
   constructor(props) {
@@ -11,9 +12,12 @@ class ToDoLists extends React.Component {
       currentID: "",
       updatedListName: "",
       Tasks: [],
+      currentList: [],
       currentUser: window.localStorage.currentuser,
+      show: false,
     };
   }
+
   componentDidMount() {
     Axios.get("http://localhost:3001/login").then((response) => {
       //if there is a cookie present
@@ -22,13 +26,14 @@ class ToDoLists extends React.Component {
         this.setState({ currentID: response.data.user[0].id });
       }
     });
+
     Axios.post("http://localhost:3001/getLists", {
       currentUser: this.state.currentUser,
     }).then((response) => {
       this.setState({ lists: response.data });
-      console.log(response);
     });
   }
+
   createList = () => {
     Axios.post("http://localhost:3001/createList", {
       //post variables to backend
@@ -39,59 +44,83 @@ class ToDoLists extends React.Component {
       this.setState({ lists: response.data });
     });
   };
+
   updateList = (id) => {
     Axios.put("http://localhost:3001/updateList", {
       list: this.state.updatedListName,
       id: id,
     });
+    alert("List name changed");
+    window.location.reload(false);
   };
+
   deleteList = (id) => {
-    console.log(id);
     Axios.delete(`http://localhost:3001/deleteList/${id}`);
     window.location.reload(false);
   };
+
   getTasks = (id) => {
     Axios.post("http://localhost:3001/getTasks", {
       id: id,
-    }).then((response) => {
-      this.setState({ Tasks: response.data });
-    });
+    })
+      .then((response) => {
+        this.setState({ Tasks: response.data }, () => {
+          console.log(response.data);
+        });
+        this.setState({ currentList: id }, () => {
+          console.log(this.state.currentList);
+        });
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   };
+
+  showTasks = () => {
+    this.setState({ show: true });
+  };
+
   render() {
     return (
       <div className="ToDoList">
         <div className="ToDoList-wrapper">
           <h2>To do lists</h2>
+          <p>
+            CLick on a list to see your tasks, or create a new list from scratch
+          </p>
           <div className="ToDoList-lists">
             {this.state.lists.map((val) => {
               return (
                 <div>
                   <div className="list-button">
-                    <button onClick={() => this.getTasks(val.list_id)}>
+                    <button
+                      onClick={() => {
+                        this.getTasks(val.list_id);
+                        this.showTasks();
+                      }}
+                    >
                       {val.list}
                     </button>
-                    <div className="delete">
-                      <AiFillEdit />
-                    </div>
                     <div className="delete">
                       <AiTwotoneDelete
                         onClick={() => this.deleteList(val.list_id)}
                       />
                     </div>
                   </div>
-                  <input
-                    type="text"
-                    onChange={(e) => {
-                      this.setState({ updatedListName: e.target.value });
-                    }}
-                    placeholder="List Name"
-                  />
-                  <button
-                    className="update"
-                    onClick={() => this.updateList(val.list_id)}
-                  >
-                    Update
-                  </button>
+                  <div className="updateList">
+                    <input
+                      type="text"
+                      onChange={(e) => {
+                        this.setState({ updatedListName: e.target.value });
+                      }}
+                      placeholder="Update"
+                    />
+                    <div className="update">
+                      <AiFillEdit
+                        onClick={() => this.updateList(val.list_id)}
+                      />
+                    </div>
+                  </div>
                 </div>
               );
             })}
@@ -108,9 +137,11 @@ class ToDoLists extends React.Component {
             Create
           </button>
         </div>
-        {this.state.Tasks.map((val, key) => {
-          return <>{val.task}</>;
-        })}
+        <TodoListTasks
+          Tasks={this.state.Tasks}
+          currentList={this.state.currentList}
+          show={this.state.show}
+        />
       </div>
     );
   }

@@ -93,11 +93,10 @@ app.post("/createList", (req, res) => {
 });
 
 app.put("/updateList", (req, res) => {
-  const id = req.body.id;
   const list = req.body.list;
+  const id = req.body.id;
   db.query(
-    "UPDATE lists SET list = ? WHERE list_id = ?",
-    [list, id],
+    `UPDATE lists SET list = '${list}' WHERE list_id = ${id}`,
     (err, result) => {
       if (err) {
         console.log(err);
@@ -121,24 +120,47 @@ app.delete("/deleteList/:id", (req, res) => {
 
 app.post("/createTask", (req, res) => {
   //catch variables from front end
-  const task = req.body.Task;
   const id = req.body.id;
+  const task = req.body.Task;
+  const status = req.body.status;
 
   //insert into database users, these rows, these values.
   db.query(
-    "INSERT INTO tasks (id, task) VALUES (?,?)",
-    [id, task],
-    (err, result) => {
+    `INSERT INTO tasks (list_id, task, status) VALUES (?,?,?)`,
+    [id, task, status],
+    (err, response) => {
       //console log errors if any
       console.log(err);
+      res.send(response);
     }
   );
 });
 
-app.post("/getTasks", (req, res) => {
+app.post("/getTasks/", (req, res) => {
   const id = req.body.id;
-  db.query(`SELECT task FROM tasks WHERE list_id = ${id}`, (err, result) => {
+  const sqlGET = `SELECT * FROM tasks WHERE list_id = '${id}' AND status = "false"`;
+  db.query(sqlGET, (err, result) => {
+    //console log errors if any
     if (err) {
+      res.json({ message: "ERROR" });
+      console.log(err);
+    } else {
+      res.send(result);
+    }
+  });
+});
+
+app.put("/completeTask", (req, res) => {
+  const id = req.body.id;
+  const complete = req.body.complete;
+  db.query(`UPDATE tasks SET status = '${complete}' WHERE task_id = ${id}`);
+});
+
+app.post("/getCompletedTasks", (req, res) => {
+  const status = req.body.status;
+  db.query(`SELECT task FROM tasks WHERE status = "true"`, (err, result) => {
+    if (err) {
+      res.json({ message: "ERROR" });
       console.log(err);
     } else {
       res.send(result);
@@ -246,7 +268,6 @@ app.post("/getLists/", (req, res) => {
       console.log(err);
     } else {
       res.send(result);
-      console.log(result);
     }
   });
 });

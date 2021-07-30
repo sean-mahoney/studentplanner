@@ -366,16 +366,6 @@ body {
   flex-wrap: wrap;
 }
 /* SignUp form styling */
-.signupform-container {
-  background: url(./images/library.jpg) center center/cover no-repeat;
-  height: 100vh;
-  min-height: 900px;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: stretch;
-  overflow: hidden;
-}
 .signupform {
   position: fixed;
   top: 50%;
@@ -664,6 +654,38 @@ body {
 }
 .delete svg {
   padding: 20px;
+  border-radius: 10px;
+}
+.updateList {
+  display: flex;
+  flex-direction: row;
+  font-family: merriweather, serif;
+  font-weight: 300;
+  font-style: normal;
+  font-size: 1em;
+  margin-top: 10px;
+  cursor: pointer;
+  background-color: rgb(17, 50, 88);
+  color: #fff;
+  border-radius: 10px;
+  width: fit-content;
+}
+.updateList input {
+  border-radius: 0px 10px 10px 0px;
+  font-size: 0.8em;
+  border: none;
+}
+.update {
+  cursor: pointer;
+  height: 20px;
+}
+.update :hover {
+  background-color: #fff;
+  color: #000;
+  transition: ease 200ms;
+}
+.update svg {
+  padding: 10px;
   border-radius: 10px;
 }
 /* Footer Styling */

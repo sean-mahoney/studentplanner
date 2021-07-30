@@ -12,7 +12,6 @@ const Dashboard = () => {
       <Profile />
       <ToDoDash />
       <StudyDash />
-      <ToDoLists />
     </div>
   );
 };
