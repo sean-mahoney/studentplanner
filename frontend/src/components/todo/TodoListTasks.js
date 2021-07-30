@@ -41,6 +41,13 @@ class TodoListTasks extends React.Component {
     });
   };
 
+  undoComplete = (id) => {
+    Axios.put("http://localhost:3001/undoComplete", {
+      id: id,
+      complete: false,
+    });
+  };
+
   render() {
     if (!this.props.show) {
       return null;
@@ -83,7 +90,7 @@ class TodoListTasks extends React.Component {
             <>
               <div className="task">
                 <button
-                  onClick={() => this.CompleteTasks(val.task_id)}
+                  onClick={() => this.undoComplete(val.task_id)}
                   className="inner-task"
                 >
                   {val.task}

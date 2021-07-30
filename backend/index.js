@@ -156,9 +156,15 @@ app.put("/completeTask", (req, res) => {
   db.query(`UPDATE tasks SET status = '${complete}' WHERE task_id = ${id}`);
 });
 
+app.put("/undoComplete", (req, res) => {
+  const id = req.body.id;
+  const complete = req.body.complete;
+  db.query(`UPDATE tasks SET status = '${complete}' WHERE task_id = ${id}`);
+});
+
 app.post("/getCompletedTasks", (req, res) => {
   const status = req.body.status;
-  db.query(`SELECT task FROM tasks WHERE status = "true"`, (err, result) => {
+  db.query(`SELECT * FROM tasks WHERE status = "true"`, (err, result) => {
     if (err) {
       res.json({ message: "ERROR" });
       console.log(err);
