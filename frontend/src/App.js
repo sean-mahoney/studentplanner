@@ -39,7 +39,7 @@ function App() {
     return (
       <Router>
         <Navbar />
-
+        <Home />
         <LoginForm />
         <SignupForm />
         <Footer />
