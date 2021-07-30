@@ -56,6 +56,7 @@ class ToDoLists extends React.Component {
 
   deleteList = (id) => {
     Axios.delete(`http://localhost:3001/deleteList/${id}`);
+    alert("List Deleted");
     window.location.reload(false);
   };
 
@@ -85,9 +86,7 @@ class ToDoLists extends React.Component {
       <div className="ToDoList">
         <div className="ToDoList-wrapper">
           <h2>To do lists</h2>
-          <p>
-            CLick on a list to see your tasks, or create a new list from scratch
-          </p>
+          <p>CLick on a list to see your tasks, or create a new list</p>
           <div className="ToDoList-lists">
             {this.state.lists.map((val) => {
               return (

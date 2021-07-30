@@ -174,6 +174,17 @@ app.post("/getCompletedTasks", (req, res) => {
   });
 });
 
+app.delete("/deleteTask/:id", (req, res) => {
+  const id = req.params.id;
+  db.query("DELETE FROM tasks WHERE task_id = ?", id, (err, result) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.send(result);
+    }
+  });
+});
+
 app.get("/login", (req, res) => {
   //catch route from frontend
   if (req.session.user) {

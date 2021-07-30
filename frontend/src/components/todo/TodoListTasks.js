@@ -49,6 +49,14 @@ class TodoListTasks extends React.Component {
       id: id,
       complete: false,
     });
+    alert("Task Restored");
+    window.location.reload(false);
+  };
+
+  deleteTask = (id) => {
+    Axios.delete(`http://localhost:3001/deleteTask/${id}`);
+    alert("Task Deleted");
+    window.location.reload(false);
   };
 
   render() {
@@ -70,7 +78,9 @@ class TodoListTasks extends React.Component {
                     {val.task}
                   </button>
                   <div className="delete">
-                    <AiTwotoneDelete />
+                    <AiTwotoneDelete
+                      onClick={() => this.deleteTask(val.task_id)}
+                    />
                   </div>
                 </div>
               </>
@@ -85,7 +95,10 @@ class TodoListTasks extends React.Component {
           }}
           placeholder="Task Name"
         />
-        <button className="btn-primary" onClick={this.CreateTasks}>
+        <button
+          className="btn-primary"
+          onClick={() => this.CreateTasks(this.currentList)}
+        >
           Add
         </button>
         <h4>Completed Tasks</h4>
@@ -101,7 +114,9 @@ class TodoListTasks extends React.Component {
                     {val.task}
                   </button>
                   <div className="delete">
-                    <AiTwotoneDelete />
+                    <AiTwotoneDelete
+                      onClick={() => this.deleteTask(val.task_id)}
+                    />
                   </div>
                 </div>
               </>
