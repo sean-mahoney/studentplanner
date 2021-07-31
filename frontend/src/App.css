@@ -705,6 +705,49 @@ body {
   padding: 10px;
   border-radius: 10px;
 }
+/* Study Plans Styling */
+.StudyPlans {
+  width: 90%;
+  padding-top: 200px;
+  margin: auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.StudyPlans button {
+  width: 200px;
+}
+.StudyPlans input {
+  width: 80%;
+  padding: 10px;
+  display: flex;
+  align-self: left;
+  border-radius: 10px;
+  font-family: merriweather, serif;
+  font-weight: 300;
+  font-style: normal;
+}
+.StudyPlans-wrapper {
+  width: 25%;
+  height: auto;
+  min-height: 500px;
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  background: rgb(245, 245, 245);
+  background: linear-gradient(
+    90deg,
+    rgba(245, 245, 245, 1) 0%,
+    rgba(233, 233, 233, 1) 100%
+  );
+  padding: 50px;
+  border-radius: 10px;
+}
+.StudyPlans-plans {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
 /* Footer Styling */
 .footer {
   width: 100%;

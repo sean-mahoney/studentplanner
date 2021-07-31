@@ -22,7 +22,6 @@ class ToDoLists extends React.Component {
     Axios.get("http://localhost:3001/login").then((response) => {
       //if there is a cookie present
       if (response.data.loggedIn === true) {
-        //set login status to true and return the username
         this.setState({ currentID: response.data.user[0].id });
       }
     });

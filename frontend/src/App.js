@@ -11,6 +11,7 @@ import ToDoLists from "./pages/ToDoLists";
 import Footer from "./components/Footer";
 import LoginForm from "./components/LoginForm";
 import SignupForm from "./components/SignupForm";
+import StudyPlans from "./pages/StudyPlans";
 
 function App() {
   const [isLoggedIn, setisLoggedIn] = useState("");
@@ -32,6 +33,7 @@ function App() {
         <Switch>
           <Route path="/" exact component={Dashboard} />
           <Route path="/ToDoLists" component={ToDoLists} />
+          <Route path="/StudyPlans" component={StudyPlans} />
         </Switch>
       </Router>
     );

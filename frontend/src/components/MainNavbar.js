@@ -40,7 +40,11 @@ function MainNavbar() {
               </Link>
             </li>
             <li className="nav-item">
-              <Link to="/" className="nav-links" onClick={closeMobileMenu}>
+              <Link
+                to="/StudyPlans"
+                className="nav-links"
+                onClick={closeMobileMenu}
+              >
                 Study Plans
               </Link>
             </li>
