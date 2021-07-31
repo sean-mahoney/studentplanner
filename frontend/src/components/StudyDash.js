@@ -12,7 +12,7 @@ class StudyDash extends React.Component {
   }
   componentDidMount() {
     Axios.post("http://localhost:3001/getPlans", {
-      currentUser: this.state.currentUser,
+      user: this.state.currentUser,
     }).then((response) => {
       this.setState({ Plans: response.data });
     });

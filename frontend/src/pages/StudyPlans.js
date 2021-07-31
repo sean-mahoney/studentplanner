@@ -13,7 +13,7 @@ function StudyPlans() {
     Axios.get("http://localhost:3001/login").then((response) => {
       //if there is a cookie present
       if (response.data.loggedIn === true) {
-        setCurrentID(response.data);
+        setCurrentID(response.data.user[0].id);
       }
     });
   }, []);
@@ -23,7 +23,6 @@ function StudyPlans() {
       user: currentUser,
     }).then((response) => {
       setPlans(response.data);
-      console.log(currentUser);
     });
   }, [currentUser]);
 
@@ -33,7 +32,11 @@ function StudyPlans() {
       plan: planName,
       user: currentUser,
     }).then((response) => {
-      setPlans(response.data);
+      Axios.post(`http://localhost:3001/getPlans`, {
+        user: currentUser,
+      }).then((response) => {
+        setPlans(response.data);
+      });
     });
   };
 
@@ -45,7 +48,9 @@ function StudyPlans() {
           {Plans.map((val) => {
             return (
               <>
-                <h2>Value</h2>
+                <div className="StudyPlans-button">
+                  <button>{val.plan}</button>
+                </div>
               </>
             );
           })}

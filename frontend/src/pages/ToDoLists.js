@@ -40,7 +40,11 @@ class ToDoLists extends React.Component {
       id: this.state.currentID,
       currentUser: this.state.currentUser,
     }).then((response) => {
-      this.setState({ lists: response.data });
+      Axios.post("http://localhost:3001/getLists", {
+        currentUser: this.state.currentUser,
+      }).then((response) => {
+        this.setState({ lists: response.data });
+      });
     });
   };
 
@@ -48,15 +52,23 @@ class ToDoLists extends React.Component {
     Axios.put("http://localhost:3001/updateList", {
       list: this.state.updatedListName,
       id: id,
+    }).then((response) => {
+      Axios.post("http://localhost:3001/getLists", {
+        currentUser: this.state.currentUser,
+      }).then((response) => {
+        this.setState({ lists: response.data });
+      });
     });
-    alert("List name changed");
-    window.location.reload(false);
   };
 
   deleteList = (id) => {
-    Axios.delete(`http://localhost:3001/deleteList/${id}`);
-    alert("List Deleted");
-    window.location.reload(false);
+    Axios.delete(`http://localhost:3001/deleteList/${id}`).then((response) => {
+      Axios.post("http://localhost:3001/getLists", {
+        currentUser: this.state.currentUser,
+      }).then((response) => {
+        this.setState({ lists: response.data });
+      });
+    });
   };
 
   getTasks = (id) => {

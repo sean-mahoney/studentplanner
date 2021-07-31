@@ -85,9 +85,9 @@ app.post("/createList", (req, res) => {
   db.query(
     "INSERT INTO lists (id, list, username) VALUES (?,?,?)",
     [id, list, currentUser],
-    (err, result) => {
+    (err, response) => {
       //console log errors if any
-      console.log(err);
+      res.send(response);
     }
   );
 });
@@ -178,6 +178,31 @@ app.delete("/deleteTask/:id", (req, res) => {
   const id = req.params.id;
   db.query("DELETE FROM tasks WHERE task_id = ?", id, (err, result) => {
     if (err) {
+      console.log(err);
+    } else {
+      res.send(result);
+    }
+  });
+});
+
+app.post("/createPlan", (req, res) => {
+  const id = req.body.id;
+  const user = req.body.user;
+  const plan = req.body.plan;
+  db.query(
+    `INSERT INTO plans (id, username, plan) VALUES (?,?,?)`,
+    [id, user, plan],
+    (response) => {
+      res.send(response);
+    }
+  );
+});
+
+app.post("/getPlans", (req, res) => {
+  const user = req.body.user;
+  db.query(`SELECT * FROM plans WHERE username = '${user}'`, (err, result) => {
+    if (err) {
+      res.json({ message: "ERROR" });
       console.log(err);
     } else {
       res.send(result);

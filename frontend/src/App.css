@@ -565,7 +565,11 @@ body {
   font-weight: 300;
   font-style: normal;
   font-size: 1em;
-  background-color: rgb(105, 105, 105);
+  background: linear-gradient(
+    90deg,
+    rgba(20, 159, 255, 1) 0%,
+    rgba(17, 122, 255, 1) 100%
+  );
   color: #fff;
   width: fit-content;
   border-radius: 0px 10px 10px 0px;
@@ -747,6 +751,36 @@ body {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+}
+.StudyPlans-button {
+  display: flex;
+  flex-direction: row;
+  font-family: merriweather, serif;
+  font-weight: 300;
+  font-style: normal;
+  font-size: 1em;
+  margin: 20px 20px 0px 0px;
+  cursor: pointer;
+  background-color: #000;
+  color: #fff;
+  border-radius: 10px;
+  width: fit-content;
+}
+.StudyPlans-button button {
+  padding: 15px 40px 15px 40px;
+  font-family: merriweather, serif;
+  font-weight: 300;
+  font-style: normal;
+  font-size: 1em;
+  background: linear-gradient(
+    90deg,
+    rgba(93, 12, 255, 1) 0%,
+    rgba(155, 0, 250, 1) 100%
+  );
+  color: #fff;
+  width: fit-content;
+  border-radius: 0px 10px 10px 0px;
+  border: none;
 }
 /* Footer Styling */
 .footer {
