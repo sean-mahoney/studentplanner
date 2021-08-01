@@ -11,10 +11,11 @@ class StudyDash extends React.Component {
     };
   }
   componentDidMount() {
-    Axios.post("http://localhost:3001/getPlans", {
+    Axios.post(`http://localhost:3001/getPlans`, {
       user: this.state.currentUser,
     }).then((response) => {
       this.setState({ Plans: response.data });
+      console.log(response.data);
     });
   }
   render() {
@@ -38,7 +39,7 @@ class StudyDash extends React.Component {
               {this.state.Plans.map((val, key) => {
                 return (
                   <div>
-                    <p>{val.list}</p>
+                    <p>{val.plan}</p>
                   </div>
                 );
               })}

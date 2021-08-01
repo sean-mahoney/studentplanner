@@ -12,7 +12,7 @@ class ToDoLists extends React.Component {
       currentID: "",
       updatedListName: "",
       Tasks: [],
-      currentList: [],
+      currentList: 0,
       currentUser: window.localStorage.currentuser,
       show: false,
     };
@@ -71,21 +71,9 @@ class ToDoLists extends React.Component {
     });
   };
 
-  getTasks = (id) => {
-    Axios.post("http://localhost:3001/getTasks", {
-      id: id,
-    })
-      .then((response) => {
-        this.setState({ Tasks: response.data }, () => {
-          console.log(response.data);
-        });
-        this.setState({ currentList: id }, () => {
-          console.log(this.state.currentList);
-        });
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+  setList = (id) => {
+    this.setState({ currentList: id });
+    console.log(this.state.currentList);
   };
 
   showTasks = () => {
@@ -97,7 +85,6 @@ class ToDoLists extends React.Component {
       <div className="ToDoList">
         <div className="ToDoList-wrapper">
           <h2>To do lists</h2>
-          <p>CLick on a list to see your tasks, or create a new list</p>
           <div className="ToDoList-lists">
             {this.state.lists.map((val) => {
               return (
@@ -105,8 +92,8 @@ class ToDoLists extends React.Component {
                   <div className="list-button">
                     <button
                       onClick={() => {
-                        this.getTasks(val.list_id);
                         this.showTasks();
+                        this.setList(val.list_id);
                       }}
                     >
                       {val.list}
@@ -148,7 +135,6 @@ class ToDoLists extends React.Component {
           </button>
         </div>
         <TodoListTasks
-          Tasks={this.state.Tasks}
           currentList={this.state.currentList}
           show={this.state.show}
         />

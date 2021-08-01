@@ -1,11 +1,16 @@
 import React, { useState, useEffect } from "react";
 import Axios from "axios"; //import axios
 import { AiTwotoneDelete, AiFillEdit } from "react-icons/ai";
+import StudyPlanPlan from "../components/study/StudyPlanPlan";
 
 function StudyPlans() {
   const [Plans, setPlans] = useState([]);
   const [currentID, setCurrentID] = useState("");
   const [planName, setPlanName] = useState("");
+  const [newPlanName, setNewPlanName] = useState("");
+  const [Plan, setPlan] = useState(0);
+  const [show, setShow] = useState(false);
+  const [currentPlanName, setCurrentPlanName] = useState("");
 
   const currentUser = window.localStorage.currentuser;
 
@@ -40,6 +45,42 @@ function StudyPlans() {
     });
   };
 
+  const updatePlan = (id) => {
+    Axios.put("http://localhost:3001/updatePlan", {
+      plan: newPlanName,
+      id: id,
+    }).then((response) => {
+      Axios.post(`http://localhost:3001/getPlans`, {
+        user: currentUser,
+      }).then((response) => {
+        setPlans(response.data);
+      });
+    });
+  };
+
+  const deletePlan = (id) => {
+    Axios.delete(`http://localhost:3001/deletePlan/${id}`).then((response) => {
+      Axios.post(`http://localhost:3001/getPlans`, {
+        user: currentUser,
+      }).then((response) => {
+        setPlans(response.data);
+      });
+    });
+  };
+
+  const selectCurrentPlan = (id) => {
+    setPlan(id);
+    console.log(Plan);
+  };
+  const selectCurrentPlanName = (id) => {
+    setCurrentPlanName(id);
+    console.log(currentPlanName);
+  };
+
+  const showPlan = () => {
+    setShow(true);
+  };
+
   return (
     <div className="StudyPlans">
       <div className="StudyPlans-wrapper">
@@ -49,7 +90,30 @@ function StudyPlans() {
             return (
               <>
                 <div className="StudyPlans-button">
-                  <button>{val.plan}</button>
+                  <button
+                    onClick={() => {
+                      showPlan();
+                      selectCurrentPlan(val.planid);
+                      selectCurrentPlanName(val.plan);
+                    }}
+                  >
+                    {val.plan}
+                  </button>
+                  <div className="delete">
+                    <AiTwotoneDelete onClick={() => deletePlan(val.planid)} />
+                  </div>
+                </div>
+                <div className="updateStudy">
+                  <input
+                    type="text"
+                    onChange={(e) => {
+                      setNewPlanName(e.target.value);
+                    }}
+                    placeholder="Update"
+                  />
+                  <div className="update">
+                    <AiFillEdit onClick={() => updatePlan(val.planid)} />
+                  </div>
                 </div>
               </>
             );
@@ -67,6 +131,11 @@ function StudyPlans() {
           Create
         </button>
       </div>
+      <StudyPlanPlan
+        show={show}
+        currentPlan={Plan}
+        currentPlanName={currentPlanName}
+      />
     </div>
   );
 }

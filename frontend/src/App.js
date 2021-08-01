@@ -35,7 +35,6 @@ function App() {
           <Route path="/ToDoLists" component={ToDoLists} />
           <Route path="/StudyPlans" component={StudyPlans} />
         </Switch>
-        <Footer />
       </Router>
     );
   } else {

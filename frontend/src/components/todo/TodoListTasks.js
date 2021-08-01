@@ -1,130 +1,152 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Axios from "axios"; //import axios
 import { AiTwotoneDelete } from "react-icons/ai";
 
-class TodoListTasks extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      currentID: "",
-      Task: "",
-      selectedTasks: [],
-    };
-  }
+function TodoListTasks(props) {
+  const [currentID, setCurrentID] = useState("");
+  const [Task, setTask] = useState("");
+  const [selectedTasks, setSelectedTasks] = useState([]);
+  const [Tasks, setTasks] = useState([]);
 
-  componentDidMount() {
-    Axios.post("http://localhost:3001/getCompletedTasks", {}).then(
-      (response) => {
-        this.setState({ selectedTasks: response.data }, () => {
-          console.log(this.state.selectedTasks);
-        });
-      }
-    );
-  }
-
-  CreateTasks = () => {
-    Axios.post("http://localhost:3001/createTask", {
-      //post variables to backend
-      id: this.props.currentList,
-      Task: this.state.Task, //set this variable equal to the value
-      status: "false",
+  useEffect(() => {
+    Axios.post("http://localhost:3001/getTasks", {
+      id: props.currentList,
+    }).then((response) => {
+      setTasks(response.data);
     });
-    console.log(this.props.currentList);
-    alert("Task Added");
-    window.location.reload(false);
-    console.log(Response);
+  }, [props.currentList]);
+
+  useEffect(() => {
+    Axios.post("http://localhost:3001/getCompletedTasks").then((response) => {
+      setSelectedTasks(response.data);
+    });
+  }, []);
+
+  const CreateTasks = () => {
+    Axios.post("http://localhost:3001/createTask", {
+      id: props.currentList,
+      Task: Task,
+      status: "false",
+    }).then((response) => {
+      Axios.post("http://localhost:3001/getTasks", {
+        id: props.currentList,
+      }).then((response) => {
+        setTasks(response.data);
+      });
+    });
   };
 
-  CompleteTasks = (id) => {
+  const CompleteTasks = (id) => {
     Axios.put("http://localhost:3001/completeTask", {
       id: id,
       complete: true,
+    }).then((response) => {
+      Axios.post("http://localhost:3001/getCompletedTasks")
+        .then((response) => {
+          setSelectedTasks(response.data);
+        })
+        .then((response) => {
+          Axios.post("http://localhost:3001/getTasks", {
+            id: props.currentList,
+          }).then((response) => {
+            setTasks(response.data);
+          });
+        });
     });
-    alert("Task Completed");
-    window.location.reload(false);
   };
 
-  undoComplete = (id) => {
+  const undoComplete = (id) => {
     Axios.put("http://localhost:3001/undoComplete", {
       id: id,
       complete: false,
+    })
+      .then((response) => {
+        Axios.post("http://localhost:3001/getTasks", {
+          id: props.currentList,
+        }).then((response) => {
+          setTasks(response.data);
+        });
+      })
+      .then((response) => {
+        Axios.post("http://localhost:3001/getCompletedTasks").then(
+          (response) => {
+            setSelectedTasks(response.data);
+          }
+        );
+      });
+  };
+
+  const deleteTask = (id) => {
+    Axios.delete(`http://localhost:3001/deleteTask/${id}`).then((response) => {
+      Axios.post("http://localhost:3001/getTasks", {
+        id: props.currentList,
+      }).then((response) => {
+        setTasks(response.data);
+      });
     });
-    alert("Task Restored");
-    window.location.reload(false);
   };
 
-  deleteTask = (id) => {
-    Axios.delete(`http://localhost:3001/deleteTask/${id}`);
-    alert("Task Deleted");
-    window.location.reload(false);
-  };
-
-  render() {
-    if (!this.props.show) {
-      return null;
-    }
-    return (
-      <div className="task-container">
-        <h2>Tasks</h2>
-        <div className="task-box">
-          {this.props.Tasks.map((val) => {
-            return (
-              <>
-                <div className="task">
-                  <button
-                    onClick={() => this.CompleteTasks(val.task_id)}
-                    className="inner-task"
-                  >
-                    {val.task}
-                  </button>
-                  <div className="delete">
-                    <AiTwotoneDelete
-                      onClick={() => this.deleteTask(val.task_id)}
-                    />
-                  </div>
-                </div>
-              </>
-            );
-          })}
-        </div>
-        <h3>Create a new task</h3>
-        <input
-          type="text"
-          onChange={(e) => {
-            this.setState({ Task: e.target.value });
-          }}
-          placeholder="Task Name"
-        />
-        <button
-          className="btn-primary"
-          onClick={() => this.CreateTasks(this.currentList)}
-        >
-          Add
-        </button>
-        <h4>Completed Tasks</h4>
-        <div className="task-box">
-          {this.state.selectedTasks.map((val) => {
-            return (
-              <>
-                <div className="task">
-                  <button
-                    onClick={() => this.undoComplete(val.task_id)}
-                    className="inner-task-complete"
-                  >
-                    {val.task}
-                  </button>
-                  <div className="delete">
-                    <AiTwotoneDelete
-                      onClick={() => this.deleteTask(val.task_id)}
-                    />
-                  </div>
-                </div>
-              </>
-            );
-          })}
-        </div>
-      </div>
-    );
+  if (!props.show) {
+    return null;
   }
+  return (
+    <div className="task-container">
+      <h2>Tasks</h2>
+      <div className="task-box">
+        {Tasks.map((val) => {
+          return (
+            <>
+              <div className="task">
+                <button
+                  onClick={() => CompleteTasks(val.task_id)}
+                  className="inner-task"
+                >
+                  {val.task}
+                </button>
+                <div className="delete">
+                  <AiTwotoneDelete onClick={() => deleteTask(val.task_id)} />
+                </div>
+              </div>
+            </>
+          );
+        })}
+      </div>
+      <h3>Create a new task</h3>
+      <input
+        type="text"
+        onChange={(e) => {
+          setTask(e.target.value);
+        }}
+        placeholder="Task Name"
+      />
+      <button
+        className="btn-primary"
+        onClick={() => CreateTasks(props.currentList)}
+      >
+        Add
+      </button>
+      <h4>Completed Tasks</h4>
+      <div className="task-box">
+        {selectedTasks.map((val) => {
+          return (
+            <>
+              <div className="task">
+                <button
+                  onClick={() => undoComplete(val.task_id)}
+                  className="inner-task-complete"
+                >
+                  {val.task}
+                </button>
+                <div className="delete">
+                  <AiTwotoneDelete onClick={() => deleteTask(val.task_id)} />
+                </div>
+              </div>
+            </>
+          );
+        })}
+      </div>
+    </div>
+  );
 }
+
 export default TodoListTasks;

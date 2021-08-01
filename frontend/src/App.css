@@ -436,20 +436,21 @@ body {
 }
 /* User Profile Component Styling */
 .Userprofile {
-  width: 20%;
+  width: 16%;
   height: 300px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  border-radius: 10px;
+  border-radius: 30px;
   background: rgb(245, 245, 245);
   background: linear-gradient(
     90deg,
     rgba(245, 245, 245, 1) 0%,
     rgba(233, 233, 233, 1) 100%
   );
-  padding: 30px;
+  padding: 50px;
+  box-shadow: 0px 0px 10px -5px #000;
 }
 .Userprofile img {
   width: 150px;
@@ -457,19 +458,20 @@ body {
 }
 /* ToDoDash Component Styling */
 .ToDoDash {
-  width: 31%;
+  width: 28%;
   min-height: 300px;
   display: flex;
   flex-direction: column;
   align-items: Left;
-  border-radius: 10px;
+  border-radius: 30px;
   background: rgb(245, 245, 245);
   background: linear-gradient(
     90deg,
     rgba(245, 245, 245, 1) 0%,
     rgba(233, 233, 233, 1) 100%
   );
-  padding: 30px;
+  padding: 50px;
+  box-shadow: 0px 0px 10px -5px #000;
 }
 .ToDoDash h2 {
   color: #000;
@@ -505,6 +507,7 @@ body {
 .ToDoList {
   width: 90%;
   padding-top: 200px;
+  padding-bottom: 100px;
   margin: auto;
   display: flex;
   flex-direction: row;
@@ -537,11 +540,12 @@ body {
     rgba(233, 233, 233, 1) 100%
   );
   padding: 50px;
-  border-radius: 10px;
+  border-radius: 30px;
+  box-shadow: 0px 0px 10px -5px #000;
 }
 .ToDoList-lists {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   flex-wrap: wrap;
   margin-bottom: 20px;
 }
@@ -556,7 +560,7 @@ body {
   cursor: pointer;
   background-color: #000;
   color: #fff;
-  border-radius: 10px;
+  border-radius: 0px 10px 10px 0px;
   width: fit-content;
 }
 .list-button button {
@@ -565,11 +569,7 @@ body {
   font-weight: 300;
   font-style: normal;
   font-size: 1em;
-  background: linear-gradient(
-    90deg,
-    rgba(20, 159, 255, 1) 0%,
-    rgba(17, 122, 255, 1) 100%
-  );
+  background: #7195a2;
   color: #fff;
   width: fit-content;
   border-radius: 0px 10px 10px 0px;
@@ -596,7 +596,8 @@ body {
     rgba(233, 233, 233, 1) 100%
   );
   padding: 50px;
-  border-radius: 10px;
+  border-radius: 30px;
+  box-shadow: 0px 0px 10px -5px #000;
 }
 .task-container h4 {
   margin-top: 50px;
@@ -713,6 +714,7 @@ body {
 .StudyPlans {
   width: 90%;
   padding-top: 200px;
+  padding-bottom: 100px;
   margin: auto;
   display: flex;
   flex-direction: row;
@@ -745,11 +747,12 @@ body {
     rgba(233, 233, 233, 1) 100%
   );
   padding: 50px;
-  border-radius: 10px;
+  border-radius: 30px;
+  box-shadow: 0px 0px 10px -5px #000;
 }
 .StudyPlans-plans {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   flex-wrap: wrap;
 }
 .StudyPlans-button {
@@ -763,7 +766,7 @@ body {
   cursor: pointer;
   background-color: #000;
   color: #fff;
-  border-radius: 10px;
+  border-radius: 0px 10px 10px 0px;
   width: fit-content;
 }
 .StudyPlans-button button {
@@ -772,15 +775,121 @@ body {
   font-weight: 300;
   font-style: normal;
   font-size: 1em;
-  background: linear-gradient(
-    90deg,
-    rgba(93, 12, 255, 1) 0%,
-    rgba(155, 0, 250, 1) 100%
-  );
+  background: #6b9b96;
   color: #fff;
   width: fit-content;
   border-radius: 0px 10px 10px 0px;
   border: none;
+}
+.StudyPlans-button button:hover {
+  cursor: pointer;
+  background: #fff;
+  color: #000;
+  font-weight: 600;
+  transition: ease 200ms;
+}
+.updateStudy {
+  display: flex;
+  flex-direction: row;
+  font-family: merriweather, serif;
+  font-weight: 300;
+  font-style: normal;
+  font-size: 1em;
+  margin-top: 10px;
+  cursor: pointer;
+  background-color: rgb(17, 50, 88);
+  color: #fff;
+  border-radius: 10px;
+  width: fit-content;
+}
+.updateStudy input {
+  border-radius: 0px 10px 10px 0px;
+  font-size: 0.8em;
+  border: none;
+}
+/* Plan Styling */
+.pla-wrapper {
+  width: 58%;
+  height: auto;
+  min-height: 500px;
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  background: rgb(245, 245, 245);
+  background: linear-gradient(
+    90deg,
+    rgba(245, 245, 245, 1) 0%,
+    rgba(233, 233, 233, 1) 100%
+  );
+  padding: 20px;
+  border-radius: 30px;
+  box-shadow: 0px 0px 10px -5px #000;
+}
+.inner-pla {
+  width: 40%;
+  min-width: fit-content;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+  border-radius: 30px;
+}
+.plan-row {
+  height: fit-content;
+  padding: 0px 20px;
+}
+.plan-row h3 {
+  text-align: center;
+}
+.title-row {
+  height: fit-content;
+  padding: 0px 20px;
+  background-color: #efefef;
+}
+.title-row h4 {
+  text-align: left;
+}
+.label-row {
+  height: fit-content;
+  padding: 0px 20px;
+  background-color: #4d4c52;
+  color: #fff;
+  text-align: left;
+  display: flex;
+  flex-direction: row;
+}
+.label-row p {
+  padding-right: 35px;
+  font-size: 0.8em;
+}
+.subtitle-row {
+  height: fit-content;
+  padding: 0px 0px;
+  display: flex;
+  flex-direction: row;
+}
+.subtitle-row input.event {
+  border-radius: 0px;
+}
+.subtitle-row input.date1 {
+  border-radius: 0px;
+  width: 55%;
+  background-color: #6b9b96;
+  color: #fff;
+  border: none;
+}
+.subtitle-row input.date1::placeholder {
+  color: #fff;
+}
+.subtitle-row input.date2 {
+  border-radius: 0px;
+  width: 55%;
+  background-color: #9d6b6b;
+  color: #fff;
+  border: none;
+}
+.subtitle-row input.date2::placeholder {
+  color: #fff;
 }
 /* Footer Styling */
 .footer {
@@ -792,6 +901,7 @@ body {
   flex-direction: row;
   justify-content: center;
   align-items: center;
+  margin-top: 50px;
 }
 .footer-logo {
   font-size: 2em;
