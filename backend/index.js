@@ -248,6 +248,52 @@ app.delete("/deletePlan/:id", (req, res) => {
   });
 });
 
+app.post("/getPla", (req, res) => {
+  const planid = req.body.id;
+  db.query(`SELECT * FROM plan WHERE planid = '${planid}'`, (err, result) => {
+    if (err) {
+      res.json({ message: "ERROR" });
+      console.log(err);
+    } else {
+      res.send(result);
+    }
+  });
+});
+
+app.post("/createPla", (req, res) => {
+  const planid = req.body.planid;
+  const title = req.body.title;
+  const startdate = req.body.startdate;
+  const duedate = req.body.duedate;
+  const priority = req.body.priority;
+  db.query(
+    `INSERT INTO plan (planid, title, startdate, duedate, priority) VALUES (?,?,?,?,?)`,
+    [planid, title, startdate, duedate, priority],
+    (response) => {
+      res.send(response);
+    }
+  );
+});
+
+app.put("/updatePla", (req, res) => {
+  const id = req.body.id;
+  const title = req.body.title;
+  const start = req.body.startdate;
+  const due = req.body.duedate;
+  const priority = req.body.priority;
+  db.query(
+    `UPDATE plan SET title = ?, startdate =?, duedate = ?, priority = ? WHERE titleid = '${id}'`,
+    [title, start, due, priority],
+    (err, response) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(response);
+      }
+    }
+  );
+});
+
 app.get("/login", (req, res) => {
   //catch route from frontend
   if (req.session.user) {
