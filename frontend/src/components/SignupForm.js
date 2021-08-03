@@ -17,7 +17,12 @@ const SignupForm = (props) => {
       fullname: nameReg,
       password: passwordReg,
     }).then((response) => {
-      console.log(response);
+      if (!response.data.userExist) {
+        alert("That username is already taken");
+      } else {
+        alert("Account created. Now please log in");
+        window.location.reload(false);
+      }
     });
   };
 

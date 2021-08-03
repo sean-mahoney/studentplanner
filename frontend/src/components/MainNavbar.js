@@ -49,11 +49,6 @@ function MainNavbar() {
               </Link>
             </li>
             <li className="nav-item">
-              <Link to="/help" className="nav-links" onClick={closeMobileMenu}>
-                My Account
-              </Link>
-            </li>
-            <li className="nav-item">
               <LogoutButton />
             </li>
           </ul>

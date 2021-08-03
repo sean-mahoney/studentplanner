@@ -22,7 +22,7 @@ class StudyDash extends React.Component {
     if (!this.state.Plans.length > 0) {
       return (
         <div className="ToDoDash">
-          <Link to="/ToDoLists">
+          <Link to="/StudyPlans">
             <h2>Study Plans</h2>
             <p>
               <em>No Plans to Show.</em> Click here to create some
@@ -33,7 +33,7 @@ class StudyDash extends React.Component {
     } else {
       return (
         <div className="ToDoDash">
-          <Link to="/ToDoLists">
+          <Link to="/StudyPlans">
             <h2>Study Plans</h2>
             <div className="ToDoDash-lists">
               {this.state.Plans.map((val, key) => {

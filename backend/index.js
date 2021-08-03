@@ -67,9 +67,12 @@ app.post("/register", (req, res) => {
     db.query(
       "INSERT INTO users (username, email, name, password) VALUES (?,?,?,?)",
       [username, email, fullname, hash],
-      (err, result) => {
-        //console log errors if any
-        console.log(err);
+      (err, response) => {
+        if (err) {
+          res.json({ userExist: false, message: "Username taken" });
+        } else {
+          res.json({ userExist: true });
+        }
       }
     );
   });
@@ -413,12 +416,7 @@ app.post("/getLists/", (req, res) => {
 
 app.post("/logout", (req, res) => {
   req.session.destroy();
-  if (err) {
-    //if errors send errors
-    res.send(err);
-  } else {
-    res.json({ message: "User Logged Out" });
-  }
+  res.json({ message: "User Logged Out" });
 });
 
 app.listen(3001, () => {
