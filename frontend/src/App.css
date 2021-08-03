@@ -668,6 +668,7 @@ body {
 .delete {
   cursor: pointer;
   height: 56px;
+  align-self: center;
 }
 .delete :hover {
   background-color: #fff;
@@ -721,14 +722,18 @@ body {
   justify-content: space-between;
 }
 .StudyPlans button {
-  width: 200px;
+  width: 100%;
+  margin-right: 0px;
+}
+.StudyPlans label {
+  padding: 10px 0px;
 }
 .StudyPlans input {
-  width: 80%;
-  padding: 10px;
+  width: 99%;
+  padding: 10px 0px;
   display: flex;
   align-self: left;
-  border-radius: 10px;
+  border-radius: 0px;
   font-family: merriweather, serif;
   font-weight: 300;
   font-style: normal;
@@ -766,8 +771,8 @@ body {
   cursor: pointer;
   background-color: #000;
   color: #fff;
-  border-radius: 0px 10px 10px 0px;
-  width: fit-content;
+  border-radius: 0px;
+  width: 100%;
 }
 .StudyPlans-button button {
   padding: 15px 40px 15px 40px;
@@ -777,9 +782,26 @@ body {
   font-size: 1em;
   background: #6b9b96;
   color: #fff;
-  width: fit-content;
-  border-radius: 0px 10px 10px 0px;
+  width: 60%;
+  border-radius: 0px;
   border: none;
+}
+.duedate {
+  width: 30%;
+  padding: 15px 10px 15px 10px;
+  font-family: merriweather, serif;
+  font-weight: 300;
+  font-style: normal;
+  font-size: 0.8em;
+  background-color: #fff;
+  color: #000;
+  display: flex;
+  justify-content: center;
+}
+.duedate p {
+  padding: 0px;
+  margin: 0px;
+  align-self: center;
 }
 .StudyPlans-button button:hover {
   cursor: pointer;
@@ -799,13 +821,25 @@ body {
   cursor: pointer;
   background-color: rgb(17, 50, 88);
   color: #fff;
-  border-radius: 10px;
-  width: fit-content;
+  border-radius: 0px;
+  width: 100%;
 }
-.updateStudy input {
-  border-radius: 0px 10px 10px 0px;
+.updateStudy input[type="text"] {
+  border-radius: 0px;
   font-size: 0.8em;
   border: none;
+  width: 50%;
+}
+.updateStudy input[type="date"] {
+  border-radius: 0px;
+  font-size: 0.8em;
+  border: none;
+  width: 50%;
+}
+.updateStudy .update {
+  padding-left: 10px;
+  padding-right: 10px;
+  border-radius: 10px;
 }
 /* Plan Styling */
 .pla-wrapper {
@@ -867,10 +901,12 @@ body {
 }
 .subtitle-row input.event {
   border-radius: 0px;
+  border: none;
 }
 .subtitle-row input.eventfull {
   border-radius: 0px;
   border: none;
+  width: 40%;
 }
 .subtitle-row input.eventfull::placeholder {
   color: #000;
@@ -878,12 +914,12 @@ body {
 .subtitle-row input.date1 {
   border-radius: 0px;
   width: 40%;
-  background-color: #6b9b96;
-  color: #fff;
+  background-color: #e7f8f6;
+  color: #000;
   border: none;
 }
 .subtitle-row input.date1::placeholder {
-  color: #fff;
+  color: #000;
 }
 .subtitle-row input.date1:hover {
   cursor: pointer;
@@ -891,45 +927,62 @@ body {
 .subtitle-row input.date2 {
   border-radius: 0px;
   width: 40%;
-  background-color: #9d6b6b;
-  color: #fff;
+  background-color: #f5e5e5;
+  color: #000;
   border: none;
 }
 .subtitle-row input.date2::placeholder {
-  color: #fff;
+  color: #000;
 }
 .subtitle-row input.date2:hover {
   cursor: pointer;
 }
-.subtitle-row input.date1full {
+.subtitle-row .date1full {
   border-radius: 0px;
   width: 40%;
-  background-color: #6b9b96;
-  color: #fff;
+  background-color: #e7f8f6;
+  color: #000;
   border: none;
 }
-.subtitle-row input.date1full::placeholder {
-  color: #fff;
+.date1full.placeholderclass::before {
+  width: 100%;
+  content: attr(placeholder);
 }
-.subtitle-row input.date1full:hover {
+.date1full.placeholderclass:focus::before {
+  width: 0%;
+  content: "";
+}
+.subtitle-row .date1full::placeholder {
+  color: #000;
+}
+.subtitle-row .date1full:hover {
   cursor: pointer;
 }
-.subtitle-row input.date2full {
+.subtitle-row .date2full {
   border-radius: 0px;
   width: 40%;
-  background-color: #9d6b6b;
-  color: #fff;
+  background-color: #f5e5e5;
+  color: #000;
   border: none;
 }
-.subtitle-row input.date2full::placeholder {
-  color: #fff;
+.date2full.placeholderclass::before {
+  width: 100%;
+  content: attr(placeholder);
 }
-.subtitle-row input.date2full:hover {
+.date2full.placeholderclass:focus::before {
+  width: 0%;
+  content: "";
+}
+.subtitle-row .date2full::placeholder {
+  color: #000;
+}
+.subtitle-row .date2full:hover {
   cursor: pointer;
 }
 .subtitle-row select.priority {
   width: 20%;
   border-radius: 0px;
+  border: none;
 }
 .subtitle-row select.priority:hover {
   cursor: pointer;

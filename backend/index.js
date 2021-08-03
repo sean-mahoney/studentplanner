@@ -213,9 +213,10 @@ app.post("/createPlan", (req, res) => {
   const id = req.body.id;
   const user = req.body.user;
   const plan = req.body.plan;
+  const due = req.body.due;
   db.query(
-    `INSERT INTO plans (id, username, plan) VALUES (?,?,?)`,
-    [id, user, plan],
+    `INSERT INTO plans (id, username, plan, due) VALUES (?,?,?,?)`,
+    [id, user, plan, due],
     (response) => {
       res.send(response);
     }
@@ -225,8 +226,9 @@ app.post("/createPlan", (req, res) => {
 app.put("/updatePlan", (req, res) => {
   const plan = req.body.plan;
   const id = req.body.id;
+  const due = req.body.due;
   db.query(
-    `UPDATE plans SET plan = '${plan}' WHERE planid = ${id}`,
+    `UPDATE plans SET plan = '${plan}', due = '${due}' WHERE planid = ${id}`,
     (err, result) => {
       if (err) {
         console.log(err);
@@ -292,6 +294,17 @@ app.put("/updatePla", (req, res) => {
       }
     }
   );
+});
+
+app.delete("/deletePla/:id", (req, res) => {
+  const id = req.params.id;
+  db.query("DELETE FROM plan WHERE titleid = ?", id, (err, result) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.send(result);
+    }
+  });
 });
 
 app.get("/login", (req, res) => {

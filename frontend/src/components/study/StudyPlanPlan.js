@@ -37,22 +37,43 @@ function StudyPlanPlan(props) {
     });
   };
 
-  const updatePla = (id) => {
-    Axios.put("http://localhost:3001/updatePla", {
-      id: id,
-      title: UpdatedTitle,
-      startdate: UpdatedStartDate,
-      duedate: UpdatedDueDate,
-      priority: UpdatedPriority,
-    }).then((response) => {
+  const updatePla = (id, title, start, due, priority) => {
+    if (!UpdatedTitle) {
+      setUpdatedTitle(title);
+    } else if (!UpdatedStartDate) {
+      setUpdatedStartDate(start);
+    } else if (!UpdatedDueDate) {
+      setUpdatedDueDate(due);
+    } else if (!UpdatedPriority) {
+      setUpdatedPriority(priority);
+    } else {
+      Axios.put("http://localhost:3001/updatePla", {
+        id: id,
+        title: UpdatedTitle,
+        startdate: UpdatedStartDate,
+        duedate: UpdatedDueDate,
+        priority: UpdatedPriority,
+      }).then((response) => {
+        Axios.post(`http://localhost:3001/getPla`, {
+          id: props.currentPlan,
+        }).then((response) => {
+          setPla(response.data);
+          alert("Event Updated");
+        });
+      });
+    }
+  };
+
+  const deletePla = (id) => {
+    Axios.delete(`http://localhost:3001/deletePla/${id}`).then((response) => {
       Axios.post(`http://localhost:3001/getPla`, {
         id: props.currentPlan,
       }).then((response) => {
         setPla(response.data);
-        alert("Event Updated");
       });
     });
   };
+
   if (!Title.length > 0) {
     setTitle("New Event");
   }
@@ -65,20 +86,13 @@ function StudyPlanPlan(props) {
   if (!Priority.length > 0) {
     setPriority("No Priority");
   }
+
   //
-  if (!UpdatedStartDate.length > 0) {
-    setUpdatedStartDate(StartDate);
-  }
-  if (!UpdatedDueDate.length > 0) {
-    setUpdatedDueDate(DueDate);
-  }
-  if (!UpdatedPriority.length > 0) {
-    setUpdatedPriority(Priority);
-  }
-  //
+
   if (!props.show) {
     return null;
   }
+
   return (
     <div className="pla-wrapper">
       <div className="inner-pla">
@@ -106,19 +120,22 @@ function StudyPlanPlan(props) {
                 }}
               ></input>
               <input
-                className="date1full"
-                type="text"
+                className="date1full placeholderclass"
+                type="date"
                 placeholder={val.startdate}
                 onChange={(e) => {
                   setUpdatedStartDate(e.target.value);
                 }}
               ></input>
               <input
-                className="date2full"
-                type="text"
+                className="date2full placeholderclass"
+                type="date"
                 placeholder={val.duedate}
                 onChange={(e) => {
                   setUpdatedDueDate(e.target.value);
+                  if (!UpdatedDueDate.length > 0) {
+                    setUpdatedDueDate(val.duedate);
+                  }
                 }}
               ></input>
               <select
@@ -126,6 +143,9 @@ function StudyPlanPlan(props) {
                 className="priority"
                 onChange={(e) => {
                   setUpdatedPriority(e.target.value);
+                  if (!UpdatedPriority.length > 0) {
+                    setUpdatedPriority(val.priority);
+                  }
                 }}
               >
                 <option value="" disabled selected hidden>
@@ -136,10 +156,20 @@ function StudyPlanPlan(props) {
                 <option value="high">High</option>
               </select>
               <div className="update-icon">
-                <AiFillEdit onClick={() => updatePla(val.titleid)} />
+                <AiFillEdit
+                  onClick={() => {
+                    updatePla(
+                      val.titleid,
+                      val.title,
+                      val.startdate,
+                      val.duedate,
+                      val.priority
+                    );
+                  }}
+                />
               </div>
               <div className="delete-icon">
-                <AiTwotoneDelete />
+                <AiTwotoneDelete onClick={() => deletePla(val.titleid)} />
               </div>
             </div>
           );

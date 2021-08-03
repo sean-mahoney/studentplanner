@@ -7,7 +7,9 @@ function StudyPlans() {
   const [Plans, setPlans] = useState([]);
   const [currentID, setCurrentID] = useState("");
   const [planName, setPlanName] = useState("");
+  const [planDate, setPlanDate] = useState("No Due Date");
   const [newPlanName, setNewPlanName] = useState("");
+  const [newPlanDate, setNewPlanDate] = useState("");
   const [Plan, setPlan] = useState(0);
   const [show, setShow] = useState(false);
   const [currentPlanName, setCurrentPlanName] = useState("");
@@ -36,6 +38,7 @@ function StudyPlans() {
       id: currentID,
       plan: planName,
       user: currentUser,
+      due: planDate,
     }).then((response) => {
       Axios.post(`http://localhost:3001/getPlans`, {
         user: currentUser,
@@ -45,17 +48,26 @@ function StudyPlans() {
     });
   };
 
-  const updatePlan = (id) => {
-    Axios.put("http://localhost:3001/updatePlan", {
-      plan: newPlanName,
-      id: id,
-    }).then((response) => {
-      Axios.post(`http://localhost:3001/getPlans`, {
-        user: currentUser,
+  const updatePlan = (id, plan, date) => {
+    if (!newPlanName.length > 0) {
+      setNewPlanName(plan);
+    } else if (!newPlanDate.length > 0) {
+      setPlanDate(date);
+    } else {
+      Axios.put("http://localhost:3001/updatePlan", {
+        plan: newPlanName,
+        due: newPlanDate,
+        id: id,
       }).then((response) => {
-        setPlans(response.data);
+        Axios.post(`http://localhost:3001/getPlans`, {
+          user: currentUser,
+        }).then((response) => {
+          setPlans(response.data);
+          setNewPlanName("");
+          setPlanDate("");
+        });
       });
-    });
+    }
   };
 
   const deletePlan = (id) => {
@@ -99,6 +111,10 @@ function StudyPlans() {
                   >
                     {val.plan}
                   </button>
+                  <div className="duedate">
+                    <p>Due:</p>
+                    <p>{val.due}</p>
+                  </div>
                   <div className="delete">
                     <AiTwotoneDelete onClick={() => deletePlan(val.planid)} />
                   </div>
@@ -106,26 +122,43 @@ function StudyPlans() {
                 <div className="updateStudy">
                   <input
                     type="text"
+                    className="updateName"
                     onChange={(e) => {
                       setNewPlanName(e.target.value);
                     }}
-                    placeholder="Update"
+                    placeholder="Update Name"
+                  />
+                  <input
+                    type="date"
+                    className="updateDate"
+                    onChange={(e) => {
+                      setNewPlanDate(e.target.value);
+                    }}
                   />
                   <div className="update">
-                    <AiFillEdit onClick={() => updatePlan(val.planid)} />
+                    <AiFillEdit
+                      onClick={() => updatePlan(val.planid, val.plan, val.date)}
+                    />
                   </div>
                 </div>
               </>
             );
           })}
         </div>
-        <h3>Create a new Plan</h3>
+        <h3>Create a new plan/event</h3>
         <input
           type="text"
           onChange={(e) => {
             setPlanName(e.target.value);
           }}
           placeholder="Plan Name"
+        />
+        <label>Due Date</label>
+        <input
+          type="date"
+          onChange={(e) => {
+            setPlanDate(e.target.value);
+          }}
         />
         <button className="btn-primary" onClick={createPlan}>
           Create
