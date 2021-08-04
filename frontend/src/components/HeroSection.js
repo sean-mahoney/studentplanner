@@ -30,6 +30,8 @@ function HeroSection() {
             </div>
           </div>
         </div>
+        <LoginForm onClose={() => setShow(false)} show={show} />
+        <SignupForm onClose={() => setShow2(false)} show2={show2} />
       </div>
     )
   );

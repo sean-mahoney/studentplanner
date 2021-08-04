@@ -16,6 +16,9 @@ import StudyPlans from "./pages/StudyPlans";
 function App() {
   const [isLoggedIn, setisLoggedIn] = useState("");
 
+  //ensures axios sends cookie requests
+  Axios.defaults.withCredentials = true;
+
   useEffect(() => {
     //get data from backend
     Axios.get("http://localhost:3001/login").then((response) => {
