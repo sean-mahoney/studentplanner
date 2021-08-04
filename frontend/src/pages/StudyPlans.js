@@ -168,6 +168,7 @@ function StudyPlans() {
         show={show}
         currentPlan={Plan}
         currentPlanName={currentPlanName}
+        onClose={() => setShow(false)}
       />
     </div>
   );

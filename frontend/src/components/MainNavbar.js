@@ -1,6 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { AiOutlineMenu } from "react-icons/ai";
 import LogoutButton from "./Buttons/LogoutButton";
 //Main navigation menu component
 function MainNavbar() {
@@ -15,14 +16,13 @@ function MainNavbar() {
           <Link to="/" className="navbar-logo">
             Student Planner
           </Link>
+          <div className="menu-icon" onClick={handleClick}>
+            <AiOutlineMenu />
+          </div>
         </div>
       </div>
       <nav className="Main-navbar">
         <div className="Main-navbar-container">
-          {/* Mobile responsive menu button*/}
-          <div className="menu-icon" onClick={handleClick}>
-            <i className={click ? "fas fa-times" : "fas fa-bars"} />
-          </div>
           {/* Navigation Menu */}
           <ul className={click ? "nav-menu active" : "nav-menu"}>
             <li className="nav-item">

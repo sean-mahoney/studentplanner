@@ -1,5 +1,6 @@
 import React from "react";
 import { useState } from "react";
+import { AiOutlineMenu } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import LoginForm from "../components/LoginForm";
 import SignupForm from "../components/SignupForm";
@@ -20,7 +21,7 @@ function Navbar() {
           </Link>
           {/* Mobile responsive menu button*/}
           <div className="menu-icon" onClick={handleClick}>
-            <i className={click ? "fas fa-times" : "fas fa-bars"} />
+            <AiOutlineMenu />
           </div>
           {/* Navigation Menu */}
           <ul className={click ? "nav-menu active" : "nav-menu"}>
@@ -30,10 +31,26 @@ function Navbar() {
               </Link>
             </li>
             <li className="nav-item">
-              <button onClick={() => setShow(true)}>Log In</button>
+              <button
+                className="nav-links"
+                onClick={() => {
+                  setShow(true);
+                  closeMobileMenu();
+                }}
+              >
+                Log In
+              </button>
             </li>
             <li className="nav-item">
-              <button onClick={() => setShow2(true)}>Sign Up</button>
+              <button
+                className="nav-links"
+                onClick={() => {
+                  setShow2(true);
+                  closeMobileMenu();
+                }}
+              >
+                Sign Up
+              </button>
             </li>
           </ul>
           <LoginForm onClose={() => setShow(false)} show={show} />

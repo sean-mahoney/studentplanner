@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Axios from "axios"; //import axios
-import { AiTwotoneDelete } from "react-icons/ai";
+import { AiTwotoneDelete, AiOutlineClose } from "react-icons/ai";
 
 function TodoListTasks(props) {
   const [currentID, setCurrentID] = useState("");
@@ -77,13 +77,21 @@ function TodoListTasks(props) {
   };
 
   const deleteTask = (id) => {
-    Axios.delete(`http://localhost:3001/deleteTask/${id}`).then((response) => {
-      Axios.post("http://localhost:3001/getTasks", {
-        id: props.currentList,
-      }).then((response) => {
-        setTasks(response.data);
+    Axios.delete(`http://localhost:3001/deleteTask/${id}`)
+      .then((response) => {
+        Axios.post("http://localhost:3001/getTasks", {
+          id: props.currentList,
+        }).then((response) => {
+          setTasks(response.data);
+        });
+      })
+      .then((response) => {
+        Axios.post("http://localhost:3001/getCompletedTasks").then(
+          (response) => {
+            setSelectedTasks(response.data);
+          }
+        );
       });
-    });
   };
 
   if (!props.show) {
@@ -91,6 +99,9 @@ function TodoListTasks(props) {
   }
   return (
     <div className="task-container">
+      <div className="close">
+        <AiOutlineClose onClick={props.onClose} />
+      </div>
       <h2>Tasks</h2>
       <div className="task-box">
         {Tasks.map((val) => {

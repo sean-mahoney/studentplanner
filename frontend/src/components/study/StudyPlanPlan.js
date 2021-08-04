@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from "react";
 import Axios from "axios"; //import axios
-import { AiTwotoneDelete, AiFillEdit, AiOutlineCheck } from "react-icons/ai";
+import {
+  AiTwotoneDelete,
+  AiFillEdit,
+  AiOutlineCheck,
+  AiOutlineClose,
+} from "react-icons/ai";
 
 function StudyPlanPlan(props) {
   const [Title, setTitle] = useState("");
@@ -95,6 +100,9 @@ function StudyPlanPlan(props) {
 
   return (
     <div className="pla-wrapper">
+      <div className="close">
+        <AiOutlineClose onClick={props.onClose} />
+      </div>
       <div className="inner-pla">
         <div className="plan-row">
           <h3>{props.currentPlanName}</h3>
@@ -132,9 +140,10 @@ function StudyPlanPlan(props) {
                 type="date"
                 placeholder={val.duedate}
                 onChange={(e) => {
-                  setUpdatedDueDate(e.target.value);
                   if (!UpdatedDueDate.length > 0) {
                     setUpdatedDueDate(val.duedate);
+                  } else {
+                    setUpdatedDueDate(e.target.value);
                   }
                 }}
               ></input>
@@ -142,9 +151,10 @@ function StudyPlanPlan(props) {
                 name="priority"
                 className="priority"
                 onChange={(e) => {
-                  setUpdatedPriority(e.target.value);
                   if (!UpdatedPriority.length > 0) {
                     setUpdatedPriority(val.priority);
+                  } else {
+                    setUpdatedPriority(e.target.value);
                   }
                 }}
               >

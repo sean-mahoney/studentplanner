@@ -136,6 +136,7 @@ class ToDoLists extends React.Component {
         </div>
         <TodoListTasks
           currentList={this.state.currentList}
+          onClose={() => this.setState({ show: false })}
           show={this.state.show}
         />
       </div>
