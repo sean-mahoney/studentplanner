@@ -67,6 +67,7 @@ class ToDoLists extends React.Component {
         currentUser: this.state.currentUser,
       }).then((response) => {
         this.setState({ lists: response.data });
+        this.setState({ show: false });
       });
     });
   };

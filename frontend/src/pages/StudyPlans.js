@@ -76,6 +76,7 @@ function StudyPlans() {
         user: currentUser,
       }).then((response) => {
         setPlans(response.data);
+        setShow(false);
       });
     });
   };

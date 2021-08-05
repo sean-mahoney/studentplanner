@@ -280,19 +280,36 @@ app.post("/createPla", (req, res) => {
   );
 });
 
-app.put("/updatePla", (req, res) => {
+app.put("/updatePlanName", (req, res) => {
   const id = req.body.id;
   const title = req.body.title;
-  const start = req.body.startdate;
-  const due = req.body.duedate;
-  const priority = req.body.priority;
   db.query(
-    `UPDATE plan SET title = ?, startdate =?, duedate = ?, priority = ? WHERE titleid = '${id}'`,
-    [title, start, due, priority],
+    `UPDATE plan SET title =? WHERE titleid = '${id}'`,
+    [title, id],
     (err, response) => {
       if (err) {
         console.log(err);
       } else {
+        console.log(response);
+        res.send(response);
+      }
+    }
+  );
+});
+
+app.put("/updatePla", (req, res) => {
+  const id = req.body.id;
+  const start = req.body.startdate;
+  const due = req.body.duedate;
+  const priority = req.body.priority;
+  db.query(
+    `UPDATE plan SET startdate =?, duedate = ?, priority = ? WHERE titleid = '${id}'`,
+    [start, due, priority],
+    (err, response) => {
+      if (err) {
+        console.log(err);
+      } else {
+        console.log(response);
         res.send(response);
       }
     }

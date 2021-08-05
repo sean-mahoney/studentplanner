@@ -42,15 +42,33 @@ function StudyPlanPlan(props) {
     });
   };
 
-  const updatePla = (id, title, start, due, priority) => {
+  const updatePlanName = (id, title) => {
     if (!UpdatedTitle) {
       setUpdatedTitle(title);
-    } else if (!UpdatedStartDate) {
+    } else {
+      Axios.put("http://localhost:3001/updatePlanName", {
+        id: id,
+        title: UpdatedTitle,
+      }).then((response) => {
+        Axios.post(`http://localhost:3001/getPla`, {
+          id: props.currentPlan,
+        }).then((response) => {
+          setPla(response.data);
+          alert("Event Name Updated");
+        });
+      });
+    }
+  };
+
+  const updatePla = (id, start, due, priority) => {
+    if (!UpdatedStartDate) {
       setUpdatedStartDate(start);
     } else if (!UpdatedDueDate) {
       setUpdatedDueDate(due);
+      console.log(UpdatedDueDate);
     } else if (!UpdatedPriority) {
       setUpdatedPriority(priority);
+      console.log(UpdatedPriority);
     } else {
       Axios.put("http://localhost:3001/updatePla", {
         id: id,
@@ -127,6 +145,13 @@ function StudyPlanPlan(props) {
                   setUpdatedTitle(e.target.value);
                 }}
               ></input>
+              <div className="update-icon">
+                <AiFillEdit
+                  onClick={() => {
+                    updatePlanName(val.titleid, val.title);
+                  }}
+                />
+              </div>
               <input
                 className="date1full placeholderclass"
                 type="date"
@@ -140,22 +165,14 @@ function StudyPlanPlan(props) {
                 type="date"
                 placeholder={val.duedate}
                 onChange={(e) => {
-                  if (!UpdatedDueDate.length > 0) {
-                    setUpdatedDueDate(val.duedate);
-                  } else {
-                    setUpdatedDueDate(e.target.value);
-                  }
+                  setUpdatedDueDate(e.target.value);
                 }}
               ></input>
               <select
                 name="priority"
                 className="priority"
                 onChange={(e) => {
-                  if (!UpdatedPriority.length > 0) {
-                    setUpdatedPriority(val.priority);
-                  } else {
-                    setUpdatedPriority(e.target.value);
-                  }
+                  setUpdatedPriority(e.target.value);
                 }}
               >
                 <option value="" disabled selected hidden>
@@ -170,7 +187,6 @@ function StudyPlanPlan(props) {
                   onClick={() => {
                     updatePla(
                       val.titleid,
-                      val.title,
                       val.startdate,
                       val.duedate,
                       val.priority
