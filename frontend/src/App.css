@@ -164,10 +164,16 @@ body {
     margin-top: 30px;
   }
   .nav-item {
-    background-color: green;
+    background-color: #000;
+    color: #fff;
   }
   .navbar {
     width: 100%;
+  }
+  .nav-item button {
+    text-align: center;
+    width: 100%;
+    margin: 10px 0px;
   }
   .navbar-container {
     width: 100%;
@@ -214,6 +220,7 @@ body {
     padding-top: 20px;
     padding-bottom: 20px;
     text-align: center;
+    color: #fff;
   }
   .navbar ul li button {
     font-size: 1.5em;
