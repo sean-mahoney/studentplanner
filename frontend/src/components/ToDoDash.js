@@ -18,22 +18,35 @@ class ToDoDash extends React.Component {
     });
   }
   render() {
-    return (
-      <div className="ToDoDash">
-        <Link to="/ToDoLists">
-          <h2>To-Do Lists</h2>
-          <div className="ToDoDash-lists">
-            {this.state.lists.map((val, key) => {
-              return (
-                <div>
-                  <p>{val.list}</p>
-                </div>
-              );
-            })}
-          </div>
-        </Link>
-      </div>
-    );
+    if (!this.state.lists.length > 0) {
+      return (
+        <div className="ToDoDash">
+          <Link to="/ToDoLists">
+            <h2>To-Do Lists</h2>
+            <p>
+              <em>No Lists to Show.</em> Click here to create some
+            </p>
+          </Link>
+        </div>
+      );
+    } else {
+      return (
+        <div className="ToDoDash">
+          <Link to="/ToDoLists">
+            <h2>To-Do Lists</h2>
+            <div className="ToDoDash-lists">
+              {this.state.lists.map((val, key) => {
+                return (
+                  <div>
+                    <p>{val.list}</p>
+                  </div>
+                );
+              })}
+            </div>
+          </Link>
+        </div>
+      );
+    }
   }
 }
 

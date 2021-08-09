@@ -12,7 +12,7 @@ class ToDoLists extends React.Component {
       currentID: "",
       updatedListName: "",
       Tasks: [],
-      currentList: [],
+      currentList: 0,
       currentUser: window.localStorage.currentuser,
       show: false,
     };
@@ -22,7 +22,6 @@ class ToDoLists extends React.Component {
     Axios.get("http://localhost:3001/login").then((response) => {
       //if there is a cookie present
       if (response.data.loggedIn === true) {
-        //set login status to true and return the username
         this.setState({ currentID: response.data.user[0].id });
       }
     });
@@ -41,7 +40,11 @@ class ToDoLists extends React.Component {
       id: this.state.currentID,
       currentUser: this.state.currentUser,
     }).then((response) => {
-      this.setState({ lists: response.data });
+      Axios.post("http://localhost:3001/getLists", {
+        currentUser: this.state.currentUser,
+      }).then((response) => {
+        this.setState({ lists: response.data });
+      });
     });
   };
 
@@ -49,32 +52,29 @@ class ToDoLists extends React.Component {
     Axios.put("http://localhost:3001/updateList", {
       list: this.state.updatedListName,
       id: id,
+    }).then((response) => {
+      Axios.post("http://localhost:3001/getLists", {
+        currentUser: this.state.currentUser,
+      }).then((response) => {
+        this.setState({ lists: response.data });
+      });
     });
-    alert("List name changed");
-    window.location.reload(false);
   };
 
   deleteList = (id) => {
-    Axios.delete(`http://localhost:3001/deleteList/${id}`);
-    alert("List Deleted");
-    window.location.reload(false);
+    Axios.delete(`http://localhost:3001/deleteList/${id}`).then((response) => {
+      Axios.post("http://localhost:3001/getLists", {
+        currentUser: this.state.currentUser,
+      }).then((response) => {
+        this.setState({ lists: response.data });
+        this.setState({ show: false });
+      });
+    });
   };
 
-  getTasks = (id) => {
-    Axios.post("http://localhost:3001/getTasks", {
-      id: id,
-    })
-      .then((response) => {
-        this.setState({ Tasks: response.data }, () => {
-          console.log(response.data);
-        });
-        this.setState({ currentList: id }, () => {
-          console.log(this.state.currentList);
-        });
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+  setList = (id) => {
+    this.setState({ currentList: id });
+    console.log(this.state.currentList);
   };
 
   showTasks = () => {
@@ -86,7 +86,6 @@ class ToDoLists extends React.Component {
       <div className="ToDoList">
         <div className="ToDoList-wrapper">
           <h2>To do lists</h2>
-          <p>CLick on a list to see your tasks, or create a new list</p>
           <div className="ToDoList-lists">
             {this.state.lists.map((val) => {
               return (
@@ -94,8 +93,8 @@ class ToDoLists extends React.Component {
                   <div className="list-button">
                     <button
                       onClick={() => {
-                        this.getTasks(val.list_id);
                         this.showTasks();
+                        this.setList(val.list_id);
                       }}
                     >
                       {val.list}
@@ -137,8 +136,8 @@ class ToDoLists extends React.Component {
           </button>
         </div>
         <TodoListTasks
-          Tasks={this.state.Tasks}
           currentList={this.state.currentList}
+          onClose={() => this.setState({ show: false })}
           show={this.state.show}
         />
       </div>

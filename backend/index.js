@@ -71,9 +71,12 @@ app.post("/register", (req, res) => {
     db.query(
       "INSERT INTO users (username, email, name, password) VALUES (?,?,?,?)",
       [username, email, fullname, hash],
-      (err, result) => {
-        //console log errors if any
-        console.log(err);
+      (err, response) => {
+        if (err) {
+          res.json({ userExist: false, message: "Username taken" });
+        } else {
+          res.json({ userExist: true });
+        }
       }
     );
   });
@@ -89,9 +92,9 @@ app.post("/createList", (req, res) => {
   db.query(
     "INSERT INTO lists (id, list, username) VALUES (?,?,?)",
     [id, list, currentUser],
-    (err, result) => {
+    (err, response) => {
       //console log errors if any
-      console.log(err);
+      res.send(response);
     }
   );
 });
@@ -142,7 +145,7 @@ app.post("/createTask", (req, res) => {
 
 app.post("/getTasks/", (req, res) => {
   const id = req.body.id;
-  const sqlGET = `SELECT * FROM tasks WHERE list_id = '${id}' AND status = "false"`;
+  const sqlGET = `SELECT * FROM tasks WHERE list_id = ${id} AND status = "false"`;
   db.query(sqlGET, (err, result) => {
     //console log errors if any
     if (err) {
@@ -157,13 +160,25 @@ app.post("/getTasks/", (req, res) => {
 app.put("/completeTask", (req, res) => {
   const id = req.body.id;
   const complete = req.body.complete;
-  db.query(`UPDATE tasks SET status = '${complete}' WHERE task_id = ${id}`);
+  db.query(
+    `UPDATE tasks SET status = '${complete}' WHERE task_id = ${id}`,
+    (err, response) => {
+      console.log(err);
+      res.send(response);
+    }
+  );
 });
 
 app.put("/undoComplete", (req, res) => {
   const id = req.body.id;
   const complete = req.body.complete;
-  db.query(`UPDATE tasks SET status = '${complete}' WHERE task_id = ${id}`);
+  db.query(
+    `UPDATE tasks SET status = '${complete}' WHERE task_id = ${id}`,
+    (err, response) => {
+      console.log(err);
+      res.send(response);
+    }
+  );
 });
 
 app.post("/getCompletedTasks", (req, res) => {
@@ -181,6 +196,133 @@ app.post("/getCompletedTasks", (req, res) => {
 app.delete("/deleteTask/:id", (req, res) => {
   const id = req.params.id;
   db.query("DELETE FROM tasks WHERE task_id = ?", id, (err, result) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.send(result);
+    }
+  });
+});
+
+app.post("/getPlans", (req, res) => {
+  const user = req.body.user;
+  db.query(`SELECT * FROM plans WHERE username = '${user}'`, (err, result) => {
+    if (err) {
+      res.json({ message: "ERROR" });
+      console.log(err);
+    } else {
+      res.send(result);
+    }
+  });
+});
+
+app.post("/createPlan", (req, res) => {
+  const id = req.body.id;
+  const user = req.body.user;
+  const plan = req.body.plan;
+  const due = req.body.due;
+  db.query(
+    `INSERT INTO plans (id, username, plan, due) VALUES (?,?,?,?)`,
+    [id, user, plan, due],
+    (response) => {
+      res.send(response);
+    }
+  );
+});
+
+app.put("/updatePlan", (req, res) => {
+  const plan = req.body.plan;
+  const id = req.body.id;
+  const due = req.body.due;
+  db.query(
+    `UPDATE plans SET plan = '${plan}', due = '${due}' WHERE planid = ${id}`,
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
+    }
+  );
+});
+
+app.delete("/deletePlan/:id", (req, res) => {
+  const id = req.params.id;
+  db.query("DELETE FROM plans WHERE planid = ?", id, (err, result) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.send(result);
+    }
+  });
+});
+
+app.post("/getPla", (req, res) => {
+  const planid = req.body.id;
+  db.query(`SELECT * FROM plan WHERE planid = '${planid}'`, (err, result) => {
+    if (err) {
+      res.json({ message: "ERROR" });
+      console.log(err);
+    } else {
+      res.send(result);
+    }
+  });
+});
+
+app.post("/createPla", (req, res) => {
+  const planid = req.body.planid;
+  const title = req.body.title;
+  const startdate = req.body.startdate;
+  const duedate = req.body.duedate;
+  const priority = req.body.priority;
+  db.query(
+    `INSERT INTO plan (planid, title, startdate, duedate, priority) VALUES (?,?,?,?,?)`,
+    [planid, title, startdate, duedate, priority],
+    (response) => {
+      res.send(response);
+    }
+  );
+});
+
+app.put("/updatePlanName", (req, res) => {
+  const id = req.body.id;
+  const title = req.body.title;
+  db.query(
+    `UPDATE plan SET title =? WHERE titleid = '${id}'`,
+    [title, id],
+    (err, response) => {
+      if (err) {
+        console.log(err);
+      } else {
+        console.log(response);
+        res.send(response);
+      }
+    }
+  );
+});
+
+app.put("/updatePla", (req, res) => {
+  const id = req.body.id;
+  const start = req.body.startdate;
+  const due = req.body.duedate;
+  const priority = req.body.priority;
+  db.query(
+    `UPDATE plan SET startdate =?, duedate = ?, priority = ? WHERE titleid = '${id}'`,
+    [start, due, priority],
+    (err, response) => {
+      if (err) {
+        console.log(err);
+      } else {
+        console.log(response);
+        res.send(response);
+      }
+    }
+  );
+});
+
+app.delete("/deletePla/:id", (req, res) => {
+  const id = req.params.id;
+  db.query("DELETE FROM plan WHERE titleid = ?", id, (err, result) => {
     if (err) {
       console.log(err);
     } else {
@@ -295,12 +437,7 @@ app.post("/getLists/", (req, res) => {
 
 app.post("/logout", (req, res) => {
   req.session.destroy();
-  if (err) {
-    //if errors send errors
-    res.send(err);
-  } else {
-    res.json({ message: "User Logged Out" });
-  }
+  res.json({ message: "User Logged Out" });
 });
 
 app.listen(process.env.PORT || 3001, () => {
